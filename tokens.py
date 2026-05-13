@@ -1,8 +1,21 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 # Access tokens for SnapID.Pro
 # Value: None = lifetime; datetime(UTC) = expiry date
-_EXP = datetime(2026, 5, 9, 23, 59, 59, tzinfo=timezone.utc)
+TRIAL_CODES_ACTIVE = False
+TRIAL_DAYS = 3
+TRIAL_CODE_PREFIXES = ("SNAP-3DAY-", "T3D-")
+
+# Set TRIAL_CODES_ACTIVE to True to renew every 3-day trial code instantly
+# for TRIAL_DAYS days from app startup. Set it to False to disable trials.
+if TRIAL_CODES_ACTIVE:
+    _EXP = datetime.now(timezone.utc) + timedelta(days=TRIAL_DAYS)
+else:
+    _EXP = datetime(2000, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
+
+
+def is_trial_token(token: str) -> bool:
+    return any(token.startswith(prefix) for prefix in TRIAL_CODE_PREFIXES)
 
 ACCESS_TOKENS = {
     # ── Lifetime tokens (110 total) ──
