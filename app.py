@@ -32,7 +32,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-from tokens import ACCESS_TOKENS
+from tokens import ACCESS_TOKENS, TRIAL_CODES_ACTIVE, is_trial_token
 
 # ---- Security Logging (stdout only for Serverless) ----
 security_logger = logging.getLogger("security")
@@ -136,8 +136,9 @@ def token_valid(token: str) -> bool:
     if not token or token not in ACCESS_TOKENS:
         return False
 
-    # Check if used in database
-    if supabase:
+    # Check if used in database. Active trial codes are renewable, so old
+    # used-token rows should not block them.
+    if supabase and not (TRIAL_CODES_ACTIVE and is_trial_token(token)):
         try:
             result = supabase.table("used_tokens").select("token").eq("token", token).execute()
             if result.data:
@@ -152,9 +153,28 @@ def token_valid(token: str) -> bool:
         return True
     return datetime.now(timezone.utc) < expiry
 
+
+def access_badge_for_token(token: str):
+    expiry = ACCESS_TOKENS.get(token)
+    if is_trial_token(token):
+        return {
+            "type": "trial",
+            "label": "3 Day Trial",
+            "expiresAt": expiry.isoformat() if expiry else None,
+        }
+    if expiry is None:
+        return {
+            "type": "lifetime",
+            "label": "Special Lifetime",
+            "expiresAt": None,
+        }
+    return None
+
 def consume_token(token: str):
     """Mark token as used. SNAP-DEV-TEST is exempt."""
     if token == "SNAP-DEV-TEST":
+        return
+    if TRIAL_CODES_ACTIVE and is_trial_token(token):
         return
     if token in ACCESS_TOKENS:
         if supabase:
@@ -386,11 +406,16 @@ def index():
         consume_token(token_param)
         session["authenticated"] = True
         session["fingerprint"] = get_session_fingerprint()
+        session["access_badge"] = access_badge_for_token(token_param)
         log_security_event("TOKEN_VALIDATED_URL", f"Token: {token_param}")
         return redirect(url_for("index"))
 
     authenticated = session.get("authenticated", False)
-    return render_template("index.html", authenticated=authenticated)
+    return render_template(
+        "index.html",
+        authenticated=authenticated,
+        access_badge=session.get("access_badge") if authenticated else None,
+    )
 
 
 @app.route("/about")
@@ -448,11 +473,14 @@ def validate_token():
         session["fingerprint"] = get_session_fingerprint()
         
         expiry = ACCESS_TOKENS[token]
+        badge = access_badge_for_token(token)
+        session["access_badge"] = badge
         log_security_event("TOKEN_VALIDATED", f"Token: {token}")
         return jsonify({
             "ok": True,
             "lifetime": expiry is None,
-            "expires": expiry.strftime("%Y-%m-%d") if expiry else None
+            "expires": expiry.strftime("%Y-%m-%d") if expiry else None,
+            "badge": badge,
         })
     
     if token_consumed(token):

@@ -2,7 +2,7 @@ from datetime import datetime, timezone, timedelta
 
 # Access tokens for SnapID.Pro
 # Value: None = lifetime; datetime(UTC) = expiry date
-TRIAL_CODES_ACTIVE = False
+TRIAL_CODES_ACTIVE = True
 TRIAL_DAYS = 3
 TRIAL_CODE_PREFIXES = ("SNAP-3DAY-", "T3D-")
 

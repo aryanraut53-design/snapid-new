@@ -176,6 +176,132 @@
       }
     }
 
+    .access-badge-slot:empty {
+      display: none;
+    }
+
+    .access-badge {
+      position: relative;
+      isolation: isolate;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      min-height: 34px;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .access-badge svg {
+      width: 1rem;
+      height: 1rem;
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+
+    .trial-access-badge {
+      color: #047857;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(6, 182, 212, 0.14));
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.12);
+    }
+
+    html.dark .trial-access-badge {
+      color: #6ee7b7;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(6, 182, 212, 0.12));
+      border-color: rgba(110, 231, 183, 0.28);
+    }
+
+    .trial-access-badge .countdown {
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+    }
+
+    .lifetime-access-badge {
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.48), transparent 22%),
+        linear-gradient(115deg, #f59e0b, #ec4899 31%, #8b5cf6 58%, #06b6d4 82%, #f59e0b);
+      background-size: 220% 220%;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+        0 12px 30px rgba(236, 72, 153, 0.30),
+        0 0 30px rgba(245, 158, 11, 0.28);
+      animation: lifetimeGradient 5s ease-in-out infinite, lifetimeLift 2.6s ease-in-out infinite;
+    }
+
+    .lifetime-access-badge::before {
+      content: "";
+      position: absolute;
+      inset: -55%;
+      z-index: -1;
+      background: conic-gradient(from 0deg, transparent 0 22%, rgba(255,255,255,0.72) 30%, transparent 42% 100%);
+      animation: lifetimeSpin 3.4s linear infinite;
+    }
+
+    .lifetime-access-badge::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(115deg, rgba(15, 23, 42, 0.10), rgba(255, 255, 255, 0.20), rgba(15, 23, 42, 0.10));
+      transform: translateX(-120%);
+      animation: lifetimeShine 2.8s ease-in-out infinite;
+    }
+
+    .lifetime-access-badge .spark {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 12px rgba(255,255,255,0.9);
+      animation: lifetimeSpark 1.9s ease-in-out infinite;
+    }
+
+    .lifetime-access-badge .spark:nth-child(1) { left: 16%; top: 24%; animation-delay: 0s; }
+    .lifetime-access-badge .spark:nth-child(2) { left: 76%; top: 18%; animation-delay: 0.45s; }
+    .lifetime-access-badge .spark:nth-child(3) { left: 62%; top: 78%; animation-delay: 0.9s; }
+
+    @keyframes lifetimeGradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes lifetimeLift {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-2px) scale(1.025); }
+    }
+
+    @keyframes lifetimeSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes lifetimeShine {
+      0%, 40% { transform: translateX(-120%); }
+      70%, 100% { transform: translateX(120%); }
+    }
+
+    @keyframes lifetimeSpark {
+      0%, 100% { opacity: 0.25; transform: scale(0.8) translateY(0); }
+      50% { opacity: 1; transform: scale(1.35) translateY(-3px); }
+    }
+
+    @media (max-width: 640px) {
+      .access-badge {
+        max-width: min(58vw, 260px);
+        font-size: 0.66rem;
+        padding-inline: 0.58rem;
+      }
+    }
+
     /* ---- Particles ---- */
     #particles-js {
       position: fixed;
@@ -1023,6 +1149,7 @@
           <button id="langToggle" class="theme-toggle text-xs font-bold" title="Switch Language" aria-label="Switch language">
             EN
           </button>
+          <div id="accessBadgeNav" class="access-badge-slot hidden sm:block"></div>
           <div class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full api-badge"
                style="background:var(--accent-muted); border:1px solid var(--accent-border)">
           <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--accent)"></span>
@@ -1308,6 +1435,8 @@
 
         <!-- Contact Links -->
         <div class="flex flex-wrap items-center justify-center gap-2">
+          <div id="accessBadgeFooter" class="access-badge-slot"></div>
+
           <a href="/faq"
             class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200"
             style="background:var(--surface); border:1px solid var(--border); color:var(--text-secondary)"
@@ -1633,6 +1762,8 @@
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
   <script>
+    window.SNAP_ACCESS_BADGE = {{ access_badge|tojson }};
+
     /* =====================================================
        RUNTIME BASE URL / FILE MODE HELPERS
     ===================================================== */
@@ -1646,6 +1777,88 @@
         img.onerror = () => { img.src = fallbackIcon; };
       });
     }
+
+    /* =====================================================
+       ACCESS BADGES
+    ===================================================== */
+    let accessBadgeTimer = null;
+
+    function formatBadgeCountdown(ms) {
+      if (!Number.isFinite(ms) || ms <= 0) return "Expired";
+      const total = Math.floor(ms / 1000);
+      const days = Math.floor(total / 86400);
+      const hours = Math.floor((total % 86400) / 3600);
+      const minutes = Math.floor((total % 3600) / 60);
+      const seconds = total % 60;
+      return `${days}d ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;
+    }
+
+    function badgeIcon(type) {
+      if (type === "lifetime") {
+        return `
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11.48 3.499a.6.6 0 011.04 0l2.13 3.675a.6.6 0 00.403.286l4.16.89a.6.6 0 01.322.977l-2.84 3.164a.6.6 0 00-.153.47l.43 4.229a.6.6 0 01-.842.612l-3.889-1.72a.6.6 0 00-.482 0l-3.89 1.72a.6.6 0 01-.841-.612l.43-4.23a.6.6 0 00-.153-.469L4.465 9.327a.6.6 0 01.322-.977l4.16-.89a.6.6 0 00.403-.286l2.13-3.675z" />
+          </svg>`;
+      }
+      return `
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4l2.5 2.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>`;
+    }
+
+    function setBadgeMarkup(markup) {
+      ["accessBadgeNav", "accessBadgeFooter"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = markup;
+      });
+    }
+
+    function renderAccessBadge(badge) {
+      if (accessBadgeTimer) {
+        clearInterval(accessBadgeTimer);
+        accessBadgeTimer = null;
+      }
+      if (!badge || !badge.type) {
+        setBadgeMarkup("");
+        return;
+      }
+
+      if (badge.type === "lifetime") {
+        setBadgeMarkup(`
+          <div class="access-badge lifetime-access-badge" title="Special Lifetime Access">
+            <span class="spark"></span><span class="spark"></span><span class="spark"></span>
+            ${badgeIcon("lifetime")}
+            <span>Special Lifetime</span>
+          </div>
+        `);
+        return;
+      }
+
+      if (badge.type === "trial" && badge.expiresAt) {
+        const expiresAt = new Date(badge.expiresAt).getTime();
+        const update = () => {
+          const remaining = expiresAt - Date.now();
+          const label = formatBadgeCountdown(remaining);
+          setBadgeMarkup(`
+            <div class="access-badge trial-access-badge" title="3 Day Trial Access">
+              ${badgeIcon("trial")}
+              <span>3 Day Trial</span>
+              <span class="countdown">${label}</span>
+            </div>
+          `);
+          if (remaining <= 0 && accessBadgeTimer) {
+            clearInterval(accessBadgeTimer);
+            accessBadgeTimer = null;
+          }
+        };
+        update();
+        accessBadgeTimer = setInterval(update, 1000);
+      }
+    }
+
+    renderAccessBadge(window.SNAP_ACCESS_BADGE);
 
     /* =====================================================
        THEME SYSTEM
@@ -2658,6 +2871,7 @@
             });
           const json = await res.json();
           if (json.ok) {
+            renderAccessBadge(json.badge);
             gate.style.opacity = "0";
             gate.style.transition = "opacity 0.5s ease";
             setTimeout(() => gate.classList.add("hidden"), 500);
