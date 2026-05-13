@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About | SnapID.Pro</title>
+    <link rel="icon" href="/assets/icon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --bg: #f6f8fc;
+        --text: #0f172a;
+        --muted: #64748b;
+        --surface: rgba(255, 255, 255, 0.9);
+        --border: rgba(99, 102, 241, 0.16);
+        --accent: #6366f1;
+        --accent2: #06b6d4;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background:
+          radial-gradient(800px 300px at -10% -10%, rgba(99, 102, 241, 0.18), transparent 60%),
+          radial-gradient(800px 300px at 110% 0%, rgba(14, 165, 233, 0.14), transparent 60%),
+          var(--bg);
+        color: var(--text);
+      }
+      .glass {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .hero-grad {
+        background: linear-gradient(135deg, #4f46e5 0%, #6366f1 35%, #0ea5e9 100%);
+      }
+      .chip {
+        border: 1px solid var(--border);
+        background: rgba(99, 102, 241, 0.08);
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="sticky top-0 z-20 glass">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/assets/icon.png" class="w-9 h-9" alt="SnapID.Pro" />
+          <div class="font-extrabold text-xl">SnapID<span class="text-indigo-500">.Pro</span></div>
+        </a>
+        <a href="/" class="px-4 py-2 rounded-xl text-sm font-bold chip">Back to App</a>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-8 sm:space-y-10">
+      <section class="hero-grad rounded-3xl p-8 sm:p-12 text-white shadow-2xl">
+        <p class="uppercase text-xs tracking-[0.2em] font-bold text-indigo-100">About SnapID.Pro</p>
+        <h1 class="text-3xl sm:text-5xl font-extrabold mt-3 leading-tight">Built to make passport photos simple, trustworthy, and print-ready.</h1>
+        <p class="mt-5 text-indigo-100 max-w-3xl leading-relaxed">
+          SnapID.Pro helps students, families, and professionals generate clean passport photo sheets in minutes. Our workflow combines guided cropping, AI-assisted background cleanup, smart enhancement, and A4 PDF output tuned for real-world print shops.
+        </p>
+      </section>
+
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <article class="glass rounded-2xl p-6">
+          <h2 class="font-extrabold text-lg">Reliability First</h2>
+          <p class="text-sm mt-2 text-slate-600 leading-relaxed">The app is engineered with graceful fallbacks so temporary AI-service issues do not block final PDF generation.</p>
+        </article>
+        <article class="glass rounded-2xl p-6">
+          <h2 class="font-extrabold text-lg">Privacy Aware</h2>
+          <p class="text-sm mt-2 text-slate-600 leading-relaxed">Security headers, token-gated access, CSRF protection, and session checks are built in to reduce misuse risks.</p>
+        </article>
+        <article class="glass rounded-2xl p-6">
+          <h2 class="font-extrabold text-lg">Print Accuracy</h2>
+          <p class="text-sm mt-2 text-slate-600 leading-relaxed">Output is laid out on A4 at 300 DPI with configurable dimensions, spacing, and border so final sheets are press-ready.</p>
+        </article>
+      </section>
+
+      <section class="glass rounded-3xl p-7 sm:p-10">
+        <h2 class="text-2xl sm:text-3xl font-extrabold">How SnapID.Pro Works</h2>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
+            <p class="font-bold">1. Upload & Crop</p>
+            <p class="text-sm text-slate-600 mt-1">Upload one or many photos and crop with passport ratio guidance.</p>
+          </div>
+          <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
+            <p class="font-bold">2. AI Refinement</p>
+            <p class="text-sm text-slate-600 mt-1">Background removal and enhancement are applied with automatic mode selection.</p>
+          </div>
+          <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
+            <p class="font-bold">3. Quality Checks</p>
+            <p class="text-sm text-slate-600 mt-1">Validation and safe defaults keep dimensions, spacing, and copies within sensible limits.</p>
+          </div>
+          <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
+            <p class="font-bold">4. Export PDF</p>
+            <p class="text-sm text-slate-600 mt-1">Get a downloadable multi-page PDF tailored for straightforward photo printing.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <article class="glass rounded-2xl p-6">
+          <h3 class="font-extrabold text-xl">Trust & Transparency</h3>
+          <ul class="mt-3 text-sm text-slate-600 space-y-2">
+            <li>Clear status feedback for success, partial AI processing, and recoverable failures.</li>
+            <li>Rate limiting to protect availability and prevent abuse.</li>
+            <li>Defensive backend error handling to avoid vague, silent failures.</li>
+          </ul>
+        </article>
+        <article class="glass rounded-2xl p-6">
+          <h3 class="font-extrabold text-xl">Need Help?</h3>
+          <p class="text-sm text-slate-600 mt-3">We welcome feedback and bug reports to keep improving accuracy and usability.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="chip px-3 py-2 rounded-xl text-xs font-bold" href="mailto:aryanraut53@gmail.com">aryanraut53@gmail.com</a>
+            <a class="chip px-3 py-2 rounded-xl text-xs font-bold" href="https://wa.me/9779762122348" target="_blank" rel="noopener noreferrer">+977 9762122348</a>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "SnapID.Pro Passport Photo Maker",
+  "short_name": "SnapID.Pro",
+  "description": "AI-powered passport photo generator with offline-ready desktop experience.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#6366F1",
+  "icons": [
+    {
+      "src": "/assets/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

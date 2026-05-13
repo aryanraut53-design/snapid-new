@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use | SnapID.Pro</title>
+    <link rel="icon" href="/assets/icon.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <style>
+      body { font-family: "Plus Jakarta Sans", sans-serif; background: #f8fafc; }
+      .step { opacity: 0; transform: translateY(14px); animation: rise 0.45s ease forwards; }
+      @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+    </style>
+  </head>
+  <body class="text-slate-900">
+    <header class="sticky top-0 z-10 bg-white/85 backdrop-blur border-b border-slate-200">
+      <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="font-extrabold text-xl">SnapID<span class="text-indigo-500">.Pro</span></a>
+        <a href="/history" class="px-3 py-2 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-600">Open History</a>
+      </div>
+    </header>
+    <main class="max-w-5xl mx-auto px-4 py-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold mb-3">How to Use SnapID.Pro</h1>
+      <p class="text-slate-600 mb-8">A practical guide to get a clean result on the first try.</p>
+      <div class="space-y-4">
+        <section class="step bg-white border border-slate-200 rounded-2xl p-5" style="animation-delay:0.05s">
+          <p class="text-xs font-bold uppercase text-indigo-600 tracking-wider">Step 1</p>
+          <h2 class="font-extrabold text-xl mt-1">Upload a clear photo</h2>
+          <p class="text-sm text-slate-600 mt-2">Use a front-facing image with proper lighting and simple background for best AI cleanup.</p>
+        </section>
+        <section class="step bg-white border border-slate-200 rounded-2xl p-5" style="animation-delay:0.1s">
+          <p class="text-xs font-bold uppercase text-indigo-600 tracking-wider">Step 2</p>
+          <h2 class="font-extrabold text-xl mt-1">Crop precisely</h2>
+          <p class="text-sm text-slate-600 mt-2">Use the crop tool to center the face and keep chin-to-head ratio passport-friendly.</p>
+        </section>
+        <section class="step bg-white border border-slate-200 rounded-2xl p-5" style="animation-delay:0.15s">
+          <p class="text-xs font-bold uppercase text-indigo-600 tracking-wider">Step 3</p>
+          <h2 class="font-extrabold text-xl mt-1">Pick enhancement mode</h2>
+          <p class="text-sm text-slate-600 mt-2">Auto Detect works for most users. Use Brighten for dark photos and Fix Color for warm/yellow casts.</p>
+        </section>
+        <section class="step bg-white border border-slate-200 rounded-2xl p-5" style="animation-delay:0.2s">
+          <p class="text-xs font-bold uppercase text-indigo-600 tracking-wider">Step 4</p>
+          <h2 class="font-extrabold text-xl mt-1">Generate and preview PDF</h2>
+          <p class="text-sm text-slate-600 mt-2">Click Generate Print Sheet. Review the preview and then download.</p>
+        </section>
+        <section class="step bg-white border border-slate-200 rounded-2xl p-5" style="animation-delay:0.25s">
+          <p class="text-xs font-bold uppercase text-indigo-600 tracking-wider">Step 5</p>
+          <h2 class="font-extrabold text-xl mt-1">Use History for later</h2>
+          <p class="text-sm text-slate-600 mt-2">Every generated PDF is auto-saved in your browser history (IndexedDB), with download/view/delete support.</p>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

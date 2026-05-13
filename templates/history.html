@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History | SnapID.Pro</title>
+    <link rel="icon" href="/assets/icon.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background:
+          radial-gradient(900px 400px at -10% 0%, rgba(99,102,241,0.18), transparent 60%),
+          radial-gradient(700px 300px at 110% 20%, rgba(6,182,212,0.15), transparent 60%),
+          #f8fafc;
+      }
+      .float-in { opacity: 0; transform: translateY(14px) scale(0.98); animation: floatIn .45s ease forwards; }
+      @keyframes floatIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+      .glass {
+        background: rgba(255,255,255,0.82);
+        border: 1px solid rgba(99,102,241,0.18);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+    </style>
+  </head>
+  <body class="text-slate-900">
+    <header class="sticky top-0 z-20 glass">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="font-extrabold text-xl">SnapID<span class="text-indigo-500">.Pro</span></a>
+        <div class="flex items-center gap-2">
+          <a href="/guide" class="px-3 py-2 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-600">Guide</a>
+          <a href="/faq" class="px-3 py-2 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-600">FAQ</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-10">
+      <section class="float-in glass rounded-3xl p-6 sm:p-8 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] font-bold text-indigo-500">History Vault</p>
+            <h1 class="text-3xl sm:text-4xl font-extrabold mt-2">Your Generated PDF History</h1>
+            <p class="text-sm text-slate-600 mt-2">Stored in IndexedDB locally in your browser. No app-imposed limit.</p>
+          </div>
+          <button id="clearAllBtn" class="px-4 py-2 rounded-xl text-sm font-bold bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 transition-colors">
+            Clear All History
+          </button>
+        </div>
+        <div class="mt-4 text-sm text-slate-600">
+          <span id="historyCount" class="font-bold text-slate-800">0</span> item(s) saved
+        </div>
+      </section>
+
+      <section id="emptyState" class="hidden mt-6 float-in glass rounded-2xl p-8 text-center">
+        <h2 class="text-xl font-extrabold">No history yet</h2>
+        <p class="text-sm text-slate-600 mt-2">Generate a PDF from the main page and it will appear here automatically.</p>
+        <a href="/" class="inline-block mt-4 px-4 py-2 rounded-xl text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-500">Go to Generator</a>
+      </section>
+
+      <section id="historyGrid" class="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></section>
+    </main>
+
+    <div id="viewerModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4">
+      <div class="max-w-5xl h-full mx-auto bg-white rounded-2xl overflow-hidden flex flex-col">
+        <div class="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+          <div>
+            <p id="viewerTitle" class="font-bold text-slate-800">PDF Preview</p>
+          </div>
+          <button id="closeViewerBtn" class="px-3 py-1.5 rounded-lg text-sm font-bold bg-slate-100 hover:bg-slate-200">Close</button>
+        </div>
+        <iframe id="viewerFrame" class="w-full flex-1" title="PDF Viewer"></iframe>
+      </div>
+    </div>
+
+    <script>
+      const DB_NAME = "snapid_history_db";
+      const STORE_NAME = "pdf_history";
+      const DB_VERSION = 1;
+
+      const historyGrid = document.getElementById("historyGrid");
+      const historyCount = document.getElementById("historyCount");
+      const emptyState = document.getElementById("emptyState");
+      const clearAllBtn = document.getElementById("clearAllBtn");
+      const viewerModal = document.getElementById("viewerModal");
+      const viewerFrame = document.getElementById("viewerFrame");
+      const viewerTitle = document.getElementById("viewerTitle");
+      const closeViewerBtn = document.getElementById("closeViewerBtn");
+
+      function openDb() {
+        return new Promise((resolve, reject) => {
+          const req = indexedDB.open(DB_NAME, DB_VERSION);
+          req.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+              const store = db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
+              store.createIndex("createdAt", "createdAt", { unique: false });
+            }
+          };
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error || new Error("Failed to open IndexedDB"));
+        });
+      }
+
+      function bytesToReadable(size) {
+        if (size < 1024) return size + " B";
+        if (size < 1024 * 1024) return (size / 1024).toFixed(1) + " KB";
+        return (size / (1024 * 1024)).toFixed(2) + " MB";
+      }
+
+      async function getAllRecords() {
+        const db = await openDb();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, "readonly");
+          const store = tx.objectStore(STORE_NAME);
+          const req = store.getAll();
+          req.onsuccess = () => resolve((req.result || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+          req.onerror = () => reject(req.error || new Error("Failed to fetch history"));
+          tx.oncomplete = () => db.close();
+        });
+      }
+
+      async function deleteRecord(id) {
+        const db = await openDb();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, "readwrite");
+          tx.objectStore(STORE_NAME).delete(id);
+          tx.oncomplete = () => { db.close(); resolve(true); };
+          tx.onerror = () => reject(tx.error || new Error("Delete failed"));
+        });
+      }
+
+      async function clearAllRecords() {
+        const db = await openDb();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, "readwrite");
+          tx.objectStore(STORE_NAME).clear();
+          tx.oncomplete = () => { db.close(); resolve(true); };
+          tx.onerror = () => reject(tx.error || new Error("Clear failed"));
+        });
+      }
+
+      function renderCards(records) {
+        historyGrid.innerHTML = "";
+        historyCount.textContent = records.length.toString();
+        emptyState.classList.toggle("hidden", records.length !== 0);
+
+        records.forEach((rec, idx) => {
+          const card = document.createElement("article");
+          card.className = "float-in glass rounded-2xl p-4 shadow-md";
+          card.style.animationDelay = `${Math.min(idx * 0.05, 0.4)}s`;
+          const when = new Date(rec.createdAt).toLocaleString();
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <p class="font-bold text-sm truncate">${rec.fileName || "passport-sheet.pdf"}</p>
+                <p class="text-xs text-slate-500 mt-1">${when}</p>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100">${rec.detectedMode || "normal"}</span>
+            </div>
+            <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+              <div class="rounded-lg bg-white/80 border border-slate-200 px-2 py-2"><span class="text-slate-500">Size:</span> <span class="font-bold text-slate-700">${bytesToReadable(rec.size || 0)}</span></div>
+              <div class="rounded-lg bg-white/80 border border-slate-200 px-2 py-2"><span class="text-slate-500">Photos:</span> <span class="font-bold text-slate-700">${rec.photoCount || 0}</span></div>
+              <div class="rounded-lg bg-white/80 border border-slate-200 px-2 py-2 col-span-2"><span class="text-slate-500">BG:</span> <span class="font-bold text-slate-700">${rec.bgRemoval || "applied"}</span></div>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <button data-view="${rec.id}" class="px-3 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500">View</button>
+              <button data-download="${rec.id}" class="px-3 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-500">Download</button>
+              <button data-delete="${rec.id}" class="px-3 py-2 rounded-xl text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200 hover:bg-rose-200">Delete</button>
+            </div>
+          `;
+          historyGrid.appendChild(card);
+        });
+      }
+
+      async function refreshHistory() {
+        const records = await getAllRecords();
+        renderCards(records);
+      }
+
+      async function getRecordById(id) {
+        const db = await openDb();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, "readonly");
+          const req = tx.objectStore(STORE_NAME).get(id);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => reject(req.error || new Error("Failed to fetch record"));
+          tx.oncomplete = () => db.close();
+        });
+      }
+
+      historyGrid.addEventListener("click", async (e) => {
+        const viewId = e.target.getAttribute("data-view");
+        const downloadId = e.target.getAttribute("data-download");
+        const deleteId = e.target.getAttribute("data-delete");
+
+        if (viewId) {
+          const rec = await getRecordById(Number(viewId));
+          if (!rec || !rec.blob) return;
+          const url = URL.createObjectURL(rec.blob);
+          viewerTitle.textContent = rec.fileName || "PDF Preview";
+          viewerFrame.src = url;
+          viewerModal.classList.remove("hidden");
+          return;
+        }
+
+        if (downloadId) {
+          const rec = await getRecordById(Number(downloadId));
+          if (!rec || !rec.blob) return;
+          const url = URL.createObjectURL(rec.blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = rec.fileName || "passport-sheet.pdf";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 2000);
+          return;
+        }
+
+        if (deleteId) {
+          await deleteRecord(Number(deleteId));
+          await refreshHistory();
+        }
+      });
+
+      clearAllBtn.addEventListener("click", async () => {
+        if (!confirm("Clear entire history? This cannot be undone.")) return;
+        await clearAllRecords();
+        await refreshHistory();
+      });
+
+      closeViewerBtn.addEventListener("click", () => {
+        viewerFrame.src = "";
+        viewerModal.classList.add("hidden");
+      });
+      viewerModal.addEventListener("click", (e) => {
+        if (e.target === viewerModal) {
+          viewerFrame.src = "";
+          viewerModal.classList.add("hidden");
+        }
+      });
+
+      refreshHistory().catch((err) => {
+        console.error(err);
+        emptyState.classList.remove("hidden");
+      });
+    </script>
+  </body>
+</html>

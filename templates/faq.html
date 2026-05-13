@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ | SnapID.Pro</title>
+    <link rel="icon" href="/assets/icon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body { font-family: "Plus Jakarta Sans", sans-serif; background: linear-gradient(180deg, #f8fbff 0%, #eef2ff 100%); }
+      details[open] summary svg { transform: rotate(180deg); }
+    </style>
+  </head>
+  <body class="text-slate-900">
+    <header class="sticky top-0 bg-white/80 backdrop-blur border-b border-indigo-100 z-20">
+      <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="/" class="font-extrabold text-xl">SnapID<span class="text-indigo-500">.Pro</span></a>
+        <div class="flex gap-2">
+          <a href="/guide" class="px-3 py-2 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-600">Guide</a>
+          <a href="/history" class="px-3 py-2 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-600">History</a>
+        </div>
+      </div>
+    </header>
+    <main class="max-w-5xl mx-auto px-4 py-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold mb-2">Frequently Asked Questions</h1>
+      <p class="text-slate-600 mb-8">Everything users usually ask before printing passport photos.</p>
+      <div class="space-y-3">
+        <details class="bg-white border border-indigo-100 rounded-2xl p-4">
+          <summary class="cursor-pointer flex justify-between items-center font-bold">Is my output print-ready?<svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+          <p class="text-sm text-slate-600 mt-3">Yes. PDFs are generated on A4 at high resolution with configurable spacing and border for common print shops.</p>
+        </details>
+        <details class="bg-white border border-indigo-100 rounded-2xl p-4">
+          <summary class="cursor-pointer flex justify-between items-center font-bold">What if background removal fails?<svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+          <p class="text-sm text-slate-600 mt-3">The app now fails softly and continues with the original image, so you still get a PDF instead of a hard error.</p>
+        </details>
+        <details class="bg-white border border-indigo-100 rounded-2xl p-4">
+          <summary class="cursor-pointer flex justify-between items-center font-bold">How many files can I store in history?<svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+          <p class="text-sm text-slate-600 mt-3">There is no app-imposed limit. History is stored in IndexedDB and grows until your browser storage quota is reached.</p>
+        </details>
+        <details class="bg-white border border-indigo-100 rounded-2xl p-4">
+          <summary class="cursor-pointer flex justify-between items-center font-bold">Can I download old PDFs later?<svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+          <p class="text-sm text-slate-600 mt-3">Yes. Go to the History page to preview, download, or remove any previously generated file.</p>
+        </details>
+      </div>
+    </main>
+  </body>
+</html>
