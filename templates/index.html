@@ -677,7 +677,7 @@
       will-change: max-height, opacity, transform;
     }
     .dropdown-anim.open {
-      max-height: 340px;
+      max-height: 520px;
       opacity: 1;
       transform: translateY(0);
     }
@@ -976,6 +976,256 @@
     /* =========================================================
          MOBILE RESPONSIVENESS FIXES
       ========================================================= */
+    html {
+      min-width: 0;
+    }
+
+    img,
+    embed,
+    video,
+    canvas {
+      max-width: 100%;
+    }
+
+    .app-shell {
+      width: min(100%, 100vw);
+    }
+
+    .action-btn {
+      min-height: 48px;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .action-btn span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .photo-card {
+      min-width: 0;
+    }
+
+    .photo-card-main {
+      min-width: 0;
+    }
+
+    .photo-card-actions button,
+    .photo-thumb-btn,
+    .theme-toggle {
+      touch-action: manipulation;
+    }
+
+    .processing-panel {
+      min-width: 0;
+    }
+
+    .processing-topline,
+    .processing-status {
+      min-width: 0;
+    }
+
+    .processing-steps {
+      min-width: 0;
+    }
+
+    .loading-message {
+      min-width: 0;
+      text-align: center;
+      overflow-wrap: anywhere;
+      line-height: 1.35;
+    }
+
+    .modal-card {
+      width: min(100%, 42rem);
+      max-height: calc(100dvh - 2rem);
+      overflow-y: auto;
+    }
+
+    #imagePreviewContent {
+      max-width: min(96vw, 900px);
+      max-height: 88dvh;
+      object-fit: contain;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        overflow-x: clip;
+      }
+
+      header .container {
+        min-width: 0;
+        gap: 0.5rem;
+      }
+
+      header .app-icon {
+        width: 2.25rem;
+        height: 2.25rem;
+      }
+
+      header span.text-xl {
+        font-size: 1.02rem;
+        line-height: 1.1;
+        white-space: nowrap;
+      }
+
+      .theme-toggle {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+      }
+
+      #langToggle {
+        font-size: 0.68rem;
+      }
+
+      .drop-zone-inner {
+        border-radius: 1.35rem;
+        padding: 1.5rem 1rem;
+      }
+
+      .drop-zone-inner h3 {
+        font-size: 1.15rem;
+      }
+
+      #openCameraBtn,
+      #addMoreBtn,
+      .enhance-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      #enhanceModeGroup {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      #advancedOptions.open {
+        max-height: 720px;
+      }
+
+      .photo-card {
+        display: grid !important;
+        grid-template-columns: 64px minmax(0, 1fr);
+        grid-template-areas:
+          "thumb main"
+          "meta meta"
+          "actions actions";
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .photo-card-thumb {
+        grid-area: thumb;
+      }
+
+      .photo-card-main {
+        grid-area: main;
+      }
+
+      .photo-card-meta {
+        grid-area: meta;
+        width: 100%;
+        flex-direction: row !important;
+        justify-content: space-between;
+        padding: 0.7rem 0.85rem;
+      }
+
+      .photo-card-actions {
+        grid-area: actions;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+      }
+
+      .photo-card-actions button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .processing-panel {
+        border-radius: 1.25rem;
+        padding: 1rem !important;
+      }
+
+      .processing-topline,
+      .processing-status {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.65rem;
+        text-align: center;
+      }
+
+      .processing-topline span,
+      .perf-metric {
+        white-space: normal;
+      }
+
+      .processing-steps {
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+      }
+
+      .processing-steps .step-line {
+        display: none;
+      }
+
+      .processing-steps .step-item {
+        width: 100%;
+        border: 1px solid var(--border-subtle);
+        border-radius: 0.9rem;
+        padding: 0.65rem 0.75rem;
+        background: var(--surface);
+      }
+
+      .processing-steps .step-item span {
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+      }
+
+      #loadingMsg {
+        display: block;
+        width: 100%;
+      }
+
+      #pdfPreview {
+        height: min(65dvh, 460px) !important;
+      }
+
+      footer .container > div {
+        align-items: stretch;
+      }
+
+      footer .flex-wrap a,
+      footer .flex-wrap button {
+        flex: 1 1 calc(50% - 0.5rem);
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      header span.text-xl {
+        font-size: 0.92rem;
+      }
+
+      header .container {
+        padding-left: 0.65rem;
+        padding-right: 0.65rem;
+      }
+
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+      }
+
+      .photo-card {
+        grid-template-columns: 56px minmax(0, 1fr);
+      }
+    }
+
     /* Notification: full-width on small screens */
     @media (max-width: 480px) {
       #notification {
@@ -1205,7 +1455,7 @@
   </section>
 
   <!-- ===== MAIN CONTENT ===== -->
-  <main class="container mx-auto px-3 sm:px-6 pb-24">
+  <main class="app-shell container mx-auto px-3 sm:px-6 pb-24">
     <div class="max-w-4xl mx-auto space-y-4 sm:space-y-6">
 
       <!-- Upload Drop Zone -->
@@ -1236,7 +1486,7 @@
             <div class="flex-1 h-px max-w-[80px]" style="background:var(--border)"></div>
           </div>
           <button id="openCameraBtn"
-            class="mt-5 inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-200"
+            class="action-btn mt-5 inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-200"
             style="background:var(--accent-muted); border:1px solid var(--accent-border); color:var(--accent)"
             onclick="event.stopPropagation()">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none">
@@ -1280,26 +1530,58 @@
 
           <!-- Advanced Fields -->
           <div id="advancedOptions" class="dropdown-anim">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-3 sm:gap-5">
+              <div class="space-y-2 md:col-span-2">
+                <label class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--text-muted)">Printer
+                  DPI Preset</label>
+                <select id="printDpi" class="input-themed w-full rounded-xl px-4 py-3 text-sm">
+                  <option value="150">150 DPI - Draft / low-ink proof</option>
+                  <option value="180">180 DPI - Fast inkjet proof</option>
+                  <option value="200">200 DPI - Basic office printer</option>
+                  <option value="203">203 DPI - Thermal / label printer</option>
+                  <option value="240">240 DPI - Canon compact photo</option>
+                  <option value="254">254 DPI - Dye-sub compact printer</option>
+                  <option value="300" selected>300 DPI - Standard inkjet / laser / photo lab</option>
+                  <option value="320">320 DPI - Mobile photo printer</option>
+                  <option value="360">360 DPI - Epson inkjet native</option>
+                  <option value="400">400 DPI - Mini lab / kiosk</option>
+                  <option value="480">480 DPI - Fine inkjet print</option>
+                  <option value="600">600 DPI - High quality laser / inkjet</option>
+                  <option value="720">720 DPI - Epson fine photo</option>
+                  <option value="1200">1200 DPI - Pro / archival print</option>
+                </select>
+              </div>
               <div class="space-y-2">
                 <label class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--text-muted)">Width
                   (px)</label>
-                <input type="number" id="width" value="390" class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
+                <input type="number" id="width" value="390" min="100" max="4000"
+                  class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
               </div>
               <div class="space-y-2">
                 <label class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--text-muted)">Height
                   (px)</label>
-                <input type="number" id="height" value="480" class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
+                <input type="number" id="height" value="480" min="100" max="5000"
+                  class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
               </div>
               <div class="space-y-2">
                 <label class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--text-muted)">Spacing
                   (px)</label>
-                <input type="number" id="spacing" value="10" class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
+                <input type="number" id="spacing" value="10" min="0" max="800"
+                  class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
               </div>
               <div class="space-y-2">
                 <label class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--text-muted)">Border
                   (px)</label>
-                <input type="number" id="border" value="2" class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
+                <input type="number" id="border" value="2" min="0" max="200"
+                  class="input-themed w-full rounded-xl px-4 py-3 text-sm" />
+              </div>
+              <div class="space-y-2 md:col-span-2">
+                <label class="text-[10px] font-bold uppercase tracking-widest" style="color:var(--text-muted)">Output
+                  Sheet</label>
+                <div id="dpiSummary" class="input-themed w-full rounded-xl px-4 py-3 text-sm font-semibold"
+                  style="color:var(--text-secondary)">
+                  A4 at 300 DPI - 2480 x 3508 px
+                </div>
               </div>
             </div>
           </div>
@@ -1333,14 +1615,14 @@
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4">
             <button id="generateBtn"
-              class="flex-1 btn-primary text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2.5">
+              class="action-btn flex-1 btn-primary text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2.5">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               <span>Generate Print Sheet</span>
             </button>
             <a id="downloadBtn" href="#" download="passport-sheet.pdf"
-              class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2.5 hidden transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/25 hover:-translate-y-0.5">
+              class="action-btn flex-1 bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center gap-2.5 hidden transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/25 hover:-translate-y-0.5">
               <svg class="w-5 h-5 download-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 style="pointer-events:none">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1352,8 +1634,8 @@
 
           <!-- Processing Steps -->
           <div id="loading" class="hidden">
-            <div class="space-y-5 bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-white/10">
-              <div class="flex items-center justify-between mb-1">
+            <div class="processing-panel space-y-5 bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-white/10">
+              <div class="processing-topline flex items-center justify-between mb-1">
                 <div class="flex items-center gap-2">
                   <span id="estTimeLabel" class="text-[10px] font-bold uppercase tracking-widest text-indigo-400">Est.
                     12s remaining</span>
@@ -1366,7 +1648,7 @@
                 <div id="progressBar" class="progress-inner"></div>
               </div>
 
-              <div class="flex items-center gap-2 pt-2">
+              <div class="processing-steps flex items-center gap-2 pt-2">
                 <div id="step1" class="step-item flex items-center gap-2 flex-1">
                   <div class="step-dot"></div>
                   <span class="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap"
@@ -1386,7 +1668,7 @@
                 </div>
               </div>
 
-              <div class="flex items-center justify-center gap-3 pt-2" style="color:var(--accent)">
+              <div class="processing-status flex items-center justify-center gap-3 pt-2" style="color:var(--accent)">
                 <svg class="animate-spin h-4 w-4 flex-shrink-0" viewBox="0 0 24 24" style="pointer-events:none">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none">
                   </circle>
@@ -1394,7 +1676,7 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                   </path>
                 </svg>
-                <span id="loadingMsg" class="text-sm font-bold tracking-wide">
+                <span id="loadingMsg" class="loading-message text-sm font-bold tracking-wide">
                   Initializing AI Engine<span class="dot-anim"><span>.</span><span>.</span><span>.</span></span>
                 </span>
               </div>
@@ -1501,7 +1783,7 @@
 
   <!-- ===== CAMERA MODAL ===== -->
   <div id="cameraModal" class="cropper-modal-overlay hidden p-3 sm:p-4">
-    <div class="rounded-3xl p-4 sm:p-8 max-w-2xl w-full shadow-2xl"
+    <div class="modal-card rounded-3xl p-4 sm:p-8 max-w-2xl w-full shadow-2xl"
       style="background:var(--surface-elevated); border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-6">
         <div>
@@ -1538,7 +1820,7 @@
         </div>
         <div class="absolute bottom-3 left-3 right-3 pointer-events-none">
           <div class="rounded-xl px-3 py-2 text-xs font-semibold text-center" style="background:rgba(15,23,42,0.72); color:#e2e8f0; border:1px solid rgba(99,102,241,0.4)">
-            <span id="cameraGuideText">Align face inside the oval, keep head straight, and use even light.</span>
+            <span id="cameraGuideText">Place one face inside the oval. Keep eyes level and shoulders straight.</span>
           </div>
         </div>
       </div>
@@ -1551,7 +1833,7 @@
       </div>
 
       <!-- Live actions -->
-      <div id="cameraLiveActions" class="flex gap-4 mt-6">
+      <div id="cameraLiveActions" class="flex flex-col sm:flex-row gap-4 mt-6">
         <button id="cancelCameraBtn"
           class="cancel-btn-themed flex-1 px-6 py-4 rounded-xl transition-all">Cancel</button>
         <button id="captureBtn"
@@ -1566,7 +1848,7 @@
       </div>
 
       <!-- Post-capture actions -->
-      <div id="cameraPostActions" class="hidden flex gap-4 mt-6">
+      <div id="cameraPostActions" class="hidden flex flex-col sm:flex-row gap-4 mt-6">
         <button id="retakeBtn"
           class="cancel-btn-themed flex-1 px-6 py-4 rounded-xl flex items-center justify-center gap-2 transition-all">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none">
@@ -1589,7 +1871,7 @@
 
   <!-- ===== CROPPER MODAL ===== -->
   <div id="cropperModal" class="cropper-modal-overlay hidden p-3 sm:p-4">
-    <div class="rounded-3xl p-4 sm:p-8 max-w-2xl w-full shadow-2xl"
+    <div class="modal-card rounded-3xl p-4 sm:p-8 max-w-2xl w-full shadow-2xl"
       style="background:var(--surface-elevated); border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-6">
         <h3 class="text-xl font-bold" style="color:var(--text-primary)">Adjust Crop</h3>
@@ -1599,7 +1881,7 @@
       <div class="max-h-[50vh] overflow-hidden rounded-2xl" style="background:#000">
         <img id="cropModalImage" src="" style="max-width:100%; display:block" />
       </div>
-      <div class="flex gap-4 mt-8">
+      <div class="flex flex-col sm:flex-row gap-4 mt-8">
         <button id="cancelCropBtn" class="cancel-btn-themed flex-1 px-6 py-4 rounded-xl transition-all">Cancel</button>
         <button id="confirmCropBtn" class="flex-1 btn-primary px-6 py-4 rounded-xl font-bold text-white">Apply
           Selection</button>
@@ -1637,7 +1919,7 @@
   <div id="feedbackModal"
     class="fixed inset-0 z-[100] hidden items-center justify-center p-3 sm:p-4 overflow-y-auto backdrop-blur-md"
     style="background:var(--modal-overlay)">
-    <div class="max-w-lg w-full rounded-3xl p-5 sm:p-8 shadow-2xl animate-enter my-auto"
+    <div class="modal-card max-w-lg w-full rounded-3xl p-5 sm:p-8 shadow-2xl animate-enter my-auto"
       style="background:var(--surface-elevated); border:1px solid var(--border)">
       <div class="flex items-center justify-between mb-8">
         <div>
@@ -1899,11 +2181,21 @@
         cameraRetake: "Retake",
         cameraUse: "Use Photo",
         faq: "FAQ",
-        cameraGuideDefault: "Align face inside the oval, keep head straight, and use even light.",
-        cameraGuideDark: "Lighting is low. Move to brighter, front-facing light.",
-        cameraGuideBright: "Too much light. Reduce glare or move away from strong light.",
-        cameraGuideBlur: "Hold still for a sharper photo.",
-        cameraGuideGood: "Great framing. You can capture now."
+        cameraGuideDefault: "Place one face inside the oval. Keep eyes level and shoulders straight.",
+        cameraGuideNoFace: "Move into the oval so your full face is clearly visible.",
+        cameraGuideMultipleFaces: "Only one person should be visible. Clear the frame before capture.",
+        cameraGuideTooFar: "Move closer until your head fills most of the oval.",
+        cameraGuideTooClose: "Move back slightly so hair, chin, and shoulders are not cropped.",
+        cameraGuideMoveLeft: "Shift slightly left to center your face in the oval.",
+        cameraGuideMoveRight: "Shift slightly right to center your face in the oval.",
+        cameraGuideMoveUp: "Raise the camera or sit taller so your face sits higher in the oval.",
+        cameraGuideMoveDown: "Lower the camera slightly so your face sits lower in the oval.",
+        cameraGuideDark: "Lighting is too low. Face a window or add a soft front light.",
+        cameraGuideBright: "Too much glare. Move away from harsh light and avoid shiny hotspots.",
+        cameraGuideUneven: "Light is uneven. Turn toward the brighter side or use front-facing light.",
+        cameraGuideBlur: "Image is soft. Hold still, clean the lens, and wait for focus.",
+        cameraGuideBackground: "Use a plain background behind you for cleaner passport output.",
+        cameraGuideGood: "Looks good: face centered, lighting even, and image sharp. Capture now."
       },
       ne: {
         langShort: "ने",
@@ -1946,12 +2238,302 @@
       }
     };
     let currentLang = "en";
+    const CAMERA_GUIDE_FALLBACKS = I18N.en;
+    const SUPPORTED_LANGS = ["en", "ne", "hi"];
+
+    Object.assign(I18N.en, {
+      langShort: "EN",
+      aiActive: "AI Enhancement Active",
+      heroBadge: "AI-Powered Background Removal",
+      uploadTypes: "JPG · PNG · WEBP",
+      printerDpi: "Printer DPI Preset",
+      widthLabel: "Width (px)",
+      heightLabel: "Height (px)",
+      spacingLabel: "Spacing (px)",
+      borderLabel: "Border (px)",
+      outputSheet: "Output Sheet",
+      dpiSummary: "A4 at {dpi} DPI - {width} x {height} px",
+      previewTitle: "Live Preview",
+      stepRemoving: "Removing BG",
+      stepEnhancing: "Enhancing",
+      stepBundling: "Bundling PDF",
+      processingRemoving: "Removing Background",
+      processingEnhancing: "Enhancing Output",
+      processingFinalizing: "Finalizing PDF Content",
+      processingComplete: "Processing Complete",
+      estRemaining: "Est. {seconds}s remaining",
+      perfSpeed: "SPEED: {speed} MB/s",
+      aiDetected: "AI detected: {mode}",
+      modeLabelDark: "dark / low light",
+      modeLabelWarm: "warm color cast",
+      modeLabelNormal: "normal",
+      modeLabelNone: "no enhancement",
+      photoAiEnhanced: "AI Enhanced",
+      bgSkipped: "BG Skipped",
+      fixedBadge: "FIXED",
+      cropOriginal: "Original",
+      cropAuto: "Auto Crop",
+      cropManual: "Custom Crop",
+      copiesLabel: "Copies",
+      copiesValue: "{count} Copies",
+      cropTitle: "Crop Photo",
+      removeTitle: "Remove",
+      previewThumbTitle: "Click to enlarge",
+      modalCropTitle: "Crop Photo",
+      modalCancel: "Cancel",
+      modalApplyCrop: "Apply Crop",
+      imagePreviewTitle: "Image Preview",
+      notificationFailed: "Action Failed",
+      notificationDone: "Step Completed",
+      notifyNeedPhoto: "Please upload at least one photo.",
+      notifyInvalidFiles: "Please upload valid image files (JPG, PNG, WEBP).",
+      notifyAutoCrop: "Auto-cropped {count} photo(s). You can still refine with manual Crop.",
+      notifyAutoCropTitle: "Smart Crop Applied",
+      notifyCropSuccess: "Photo cropped successfully.",
+      notifyQuota: "API quota exceeded. Please try again later.",
+      notifyDetectFail: "Cannot detect face/background in one of the images.",
+      notifyInvalidInput: "Invalid input. Please review your settings.",
+      notifySessionExpired: "Session expired. Please unlock and try again.",
+      notifyServiceDown: "Image service is temporarily unavailable. Please retry.",
+      notifyServerError: "Internal server error. Please try again.",
+      notifyProcessingFailed: "Image processing failed. Please try again.",
+      notifyPdfPartial: "PDF generated. Some images skipped background removal.",
+      notifyPdfReady: "PDF generated successfully!",
+      notifyOutputReady: "Output ready",
+      notifyReadyDownload: "Ready to download",
+      notifyCameraDenied: "Camera access denied. Please allow camera permissions.",
+      notifyPermissionRequired: "Permission Required",
+      notifyCapturedAuto: "Photo captured and auto-cropped! You can still adjust manually.",
+      notifyCapturedAdded: "Photo captured and added!",
+      notifyReadyEnhance: "Ready to enhance"
+    });
+
+    I18N.ne = {
+      ...I18N.en,
+      langShort: "ने",
+      navAbout: "बारेमा",
+      navGuide: "मार्गदर्शिका",
+      navHistory: "इतिहास",
+      aiActive: "AI सुधार सक्रिय",
+      heroBadge: "AI-संचालित ब्याकग्राउन्ड हटाउने",
+      heroTitle1: "व्यावसायिक पासपोर्ट फोटो",
+      heroTitle2: "SnapID.Pro द्वारा",
+      heroDesc: "फोटो क्रप, सुधार, र प्रिन्ट-रेडी पासपोर्ट शीट केही सेकेन्डमै तयार गर्नुहोस्।",
+      uploadTitle: "आफ्ना फोटो यहाँ राख्नुहोस्",
+      uploadDescA: "तान्नुहोस् र छोड्नुहोस् वा",
+      uploadDescB: "फाइल छान्नुहोस्",
+      uploadOr: "वा",
+      takePhotoBtn: "क्यामेराबाट फोटो खिच्नुहोस्",
+      addMoreBtn: "+ थप फोटो थप्नुहोस्",
+      configTitle: "सेटिङ",
+      advancedSettings: "उन्नत सेटिङ",
+      printerDpi: "प्रिन्टर DPI प्रिसेट",
+      widthLabel: "चौडाइ (px)",
+      heightLabel: "उचाइ (px)",
+      spacingLabel: "दूरी (px)",
+      borderLabel: "किनारा (px)",
+      outputSheet: "आउटपुट शीट",
+      dpiSummary: "{dpi} DPI मा A4 - {width} x {height} px",
+      enhanceMode: "सुधार मोड",
+      modeAuto: "स्वचालित",
+      modeDark: "उज्यालो बनाउनुहोस्",
+      modeWarm: "रङ मिलाउनुहोस्",
+      modeNormal: "प्राकृतिक",
+      modeNone: "सुधार नगर्ने",
+      generateBtn: "प्रिन्ट शीट बनाउनुहोस्",
+      downloadBtn: "PDF डाउनलोड",
+      previewTitle: "प्रत्यक्ष पूर्वावलोकन",
+      stepRemoving: "BG हटाउँदै",
+      stepEnhancing: "सुधार गर्दै",
+      stepBundling: "PDF बनाउँदै",
+      processingRemoving: "ब्याकग्राउन्ड हटाउँदै",
+      processingEnhancing: "आउटपुट सुधार गर्दै",
+      processingFinalizing: "PDF अन्तिम गर्दै",
+      processingComplete: "प्रक्रिया पूरा भयो",
+      estRemaining: "अनुमानित {seconds}s बाँकी",
+      aiDetected: "AI ले पत्ता लगायो: {mode}",
+      modeLabelDark: "अँध्यारो / कम प्रकाश",
+      modeLabelWarm: "तातो रङ",
+      modeLabelNormal: "सामान्य",
+      modeLabelNone: "सुधार छैन",
+      photoAiEnhanced: "AI सुधार",
+      bgSkipped: "BG छोडियो",
+      fixedBadge: "ठीक",
+      cropOriginal: "मूल",
+      cropAuto: "अटो क्रप",
+      cropManual: "कस्टम क्रप",
+      copiesLabel: "प्रतिलिपि",
+      copiesValue: "{count} प्रतिलिपि",
+      cropTitle: "फोटो क्रप",
+      removeTitle: "हटाउनुहोस्",
+      previewThumbTitle: "ठूलो हेर्न क्लिक गर्नुहोस्",
+      cameraTitle: "फोटो खिच्नुहोस्",
+      cameraSub: "अनुहार मिलाएर खिच्नुहोस्",
+      cameraCapture: "खिच्नुहोस्",
+      cameraCancel: "रद्द",
+      cameraRetake: "फेरि खिच्नुहोस्",
+      cameraUse: "यो फोटो प्रयोग गर्नुहोस्",
+      modalCropTitle: "फोटो क्रप",
+      modalCancel: "रद्द",
+      modalApplyCrop: "क्रप लागू गर्नुहोस्",
+      faq: "FAQ",
+      notificationFailed: "कार्य असफल",
+      notificationDone: "चरण पूरा भयो",
+      notifyNeedPhoto: "कृपया कम्तीमा एउटा फोटो अपलोड गर्नुहोस्।",
+      notifyInvalidFiles: "कृपया मान्य फोटो फाइल अपलोड गर्नुहोस् (JPG, PNG, WEBP)।",
+      notifyAutoCrop: "{count} फोटो अटो-क्रप भयो। चाहनुहुन्छ भने म्यानुअल क्रप गर्न सक्नुहुन्छ।",
+      notifyAutoCropTitle: "स्मार्ट क्रप लागू भयो",
+      notifyCropSuccess: "फोटो सफलतापूर्वक क्रप भयो।",
+      notifyQuota: "API कोटा सकियो। कृपया पछि फेरि प्रयास गर्नुहोस्।",
+      notifyDetectFail: "कुनै फोटोमा अनुहार/ब्याकग्राउन्ड पत्ता लागेन।",
+      notifyInvalidInput: "इनपुट गलत छ। कृपया सेटिङ जाँच गर्नुहोस्।",
+      notifySessionExpired: "सेसन सकियो। कृपया फेरि अनलक गरेर प्रयास गर्नुहोस्।",
+      notifyServiceDown: "छवि सेवा अस्थायी रूपमा उपलब्ध छैन। फेरि प्रयास गर्नुहोस्।",
+      notifyServerError: "आन्तरिक सर्भर त्रुटि। कृपया फेरि प्रयास गर्नुहोस्।",
+      notifyProcessingFailed: "छवि प्रक्रिया असफल भयो। कृपया फेरि प्रयास गर्नुहोस्।",
+      notifyPdfPartial: "PDF तयार भयो। केही फोटोमा ब्याकग्राउन्ड हटाउने चरण छोडियो।",
+      notifyPdfReady: "PDF सफलतापूर्वक तयार भयो!",
+      notifyOutputReady: "आउटपुट तयार",
+      notifyReadyDownload: "डाउनलोडका लागि तयार",
+      notifyCameraDenied: "क्यामेरा अनुमति अस्वीकार भयो। कृपया अनुमति दिनुहोस्।",
+      notifyPermissionRequired: "अनुमति आवश्यक",
+      notifyCapturedAuto: "फोटो खिचियो र अटो-क्रप भयो। चाहनुहुन्छ भने मिलाउन सक्नुहुन्छ।",
+      notifyCapturedAdded: "फोटो खिचियो र थपियो!",
+      notifyReadyEnhance: "सुधारका लागि तयार",
+      cameraGuideDefault: "एउटा अनुहार अण्डाकार भित्र राख्नुहोस्। आँखा सीधा र काँध मिलाएर बस्नुहोस्।",
+      cameraGuideNoFace: "पूरा अनुहार स्पष्ट देखिने गरी अण्डाकार भित्र आउनुहोस्।",
+      cameraGuideMultipleFaces: "एक जना मात्र फ्रेममा हुनुपर्छ। अरू अनुहार हटाउनुहोस्।",
+      cameraGuideTooFar: "टाउको अण्डाकारमा राम्रोसँग भरिने गरी अलि नजिक आउनुहोस्।",
+      cameraGuideTooClose: "कपाल, चिउँडो र काँध नकटिने गरी अलि पछाडि सर्नुहोस्।",
+      cameraGuideMoveLeft: "अनुहार केन्द्रमा ल्याउन अलि बायाँ सर्नुहोस्।",
+      cameraGuideMoveRight: "अनुहार केन्द्रमा ल्याउन अलि दायाँ सर्नुहोस्।",
+      cameraGuideMoveUp: "अनुहार अण्डाकारमा माथि राख्न क्यामेरा उठाउनुहोस् वा सीधा बस्नुहोस्।",
+      cameraGuideMoveDown: "अनुहार अलि तल ल्याउन क्यामेरा केही तल गर्नुहोस्।",
+      cameraGuideDark: "प्रकाश कम छ। झ्यालतिर फर्कनुहोस् वा नरम अगाडिको बत्ती प्रयोग गर्नुहोस्।",
+      cameraGuideBright: "चमक धेरै छ। कडा प्रकाशबाट टाढा सर्नुहोस्।",
+      cameraGuideUneven: "प्रकाश असमान छ। उज्यालो दिशातिर फर्कनुहोस् वा अगाडिबाट प्रकाश दिनुहोस्।",
+      cameraGuideBlur: "तस्बिर धमिलो छ। स्थिर बस्नुहोस्, लेन्स सफा गर्नुहोस्, र फोकस पर्खनुहोस्।",
+      cameraGuideBackground: "सफा पासपोर्ट आउटपुटका लागि सादा ब्याकग्राउन्ड प्रयोग गर्नुहोस्।",
+      cameraGuideGood: "राम्रो छ: अनुहार केन्द्रमा, प्रकाश समान, र फोटो स्पष्ट छ। अब खिच्नुहोस्।"
+    };
+
+    I18N.hi = {
+      ...I18N.en,
+      langShort: "हि",
+      navAbout: "परिचय",
+      navGuide: "गाइड",
+      navHistory: "इतिहास",
+      aiActive: "AI सुधार सक्रिय",
+      heroBadge: "AI-पावर्ड बैकग्राउंड रिमूवल",
+      heroTitle1: "प्रोफेशनल पासपोर्ट फोटो",
+      heroTitle2: "SnapID.Pro के साथ",
+      heroDesc: "फोटो क्रॉप करें, सुधारें, और प्रिंट-रेडी पासपोर्ट शीट सेकंडों में बनाएं।",
+      uploadTitle: "अपनी फोटो यहां डालें",
+      uploadDescA: "ड्रैग एंड ड्रॉप करें या",
+      uploadDescB: "फाइल चुनें",
+      uploadOr: "या",
+      takePhotoBtn: "कैमरा से फोटो लें",
+      addMoreBtn: "+ और फोटो जोड़ें",
+      configTitle: "सेटिंग",
+      advancedSettings: "एडवांस सेटिंग",
+      printerDpi: "प्रिंटर DPI प्रीसेट",
+      widthLabel: "चौड़ाई (px)",
+      heightLabel: "ऊंचाई (px)",
+      spacingLabel: "स्पेसिंग (px)",
+      borderLabel: "बॉर्डर (px)",
+      outputSheet: "आउटपुट शीट",
+      dpiSummary: "{dpi} DPI पर A4 - {width} x {height} px",
+      enhanceMode: "एन्हांस मोड",
+      modeAuto: "ऑटो डिटेक्ट",
+      modeDark: "ब्राइटन",
+      modeWarm: "कलर ठीक करें",
+      modeNormal: "नेचुरल",
+      modeNone: "कोई सुधार नहीं",
+      generateBtn: "प्रिंट शीट बनाएं",
+      downloadBtn: "PDF डाउनलोड",
+      previewTitle: "लाइव प्रीव्यू",
+      cameraTitle: "फोटो लें",
+      cameraSub: "खुद को फ्रेम में रखें और कैप्चर करें",
+      cameraCapture: "कैप्चर",
+      cameraCancel: "रद्द करें",
+      cameraRetake: "फिर से लें",
+      cameraUse: "फोटो उपयोग करें",
+      faq: "FAQ",
+      stepRemoving: "BG हट रहा है",
+      stepEnhancing: "सुधार हो रहा है",
+      stepBundling: "PDF बन रही है",
+      processingRemoving: "बैकग्राउंड हट रहा है",
+      processingEnhancing: "आउटपुट सुधर रहा है",
+      processingFinalizing: "PDF फाइनल हो रही है",
+      processingComplete: "प्रोसेस पूरा",
+      estRemaining: "लगभग {seconds}s बाकी",
+      aiDetected: "AI ने पहचाना: {mode}",
+      modeLabelDark: "डार्क / कम रोशनी",
+      modeLabelWarm: "वार्म कलर",
+      modeLabelNormal: "नॉर्मल",
+      modeLabelNone: "कोई सुधार नहीं",
+      photoAiEnhanced: "AI सुधार",
+      bgSkipped: "BG स्किप",
+      fixedBadge: "फिक्स",
+      cropOriginal: "ओरिजिनल",
+      cropAuto: "ऑटो क्रॉप",
+      cropManual: "कस्टम क्रॉप",
+      copiesLabel: "कॉपी",
+      copiesValue: "{count} कॉपी",
+      notificationFailed: "कार्य असफल",
+      notificationDone: "स्टेप पूरा",
+      notifyNeedPhoto: "कृपया कम से कम एक फोटो अपलोड करें।",
+      notifyInvalidFiles: "कृपया मान्य फोटो फाइल अपलोड करें (JPG, PNG, WEBP)।",
+      notifyAutoCrop: "{count} फोटो ऑटो-क्रॉप हुईं। चाहें तो मैनुअल क्रॉप से सुधार सकते हैं।",
+      notifyAutoCropTitle: "स्मार्ट क्रॉप लागू",
+      notifyCropSuccess: "फोटो सफलतापूर्वक क्रॉप हुई।",
+      notifyQuota: "API कोटा खत्म हो गया। कृपया बाद में कोशिश करें।",
+      notifyDetectFail: "किसी फोटो में चेहरा/बैकग्राउंड पहचान नहीं पाया।",
+      notifyInvalidInput: "इनपुट गलत है। कृपया सेटिंग जांचें।",
+      notifySessionExpired: "सेशन खत्म हो गया। कृपया दोबारा अनलॉक करें।",
+      notifyServiceDown: "इमेज सेवा अस्थायी रूप से उपलब्ध नहीं है। फिर कोशिश करें।",
+      notifyServerError: "आंतरिक सर्वर त्रुटि। कृपया फिर कोशिश करें।",
+      notifyProcessingFailed: "इमेज प्रोसेसिंग विफल रही। कृपया फिर कोशिश करें।",
+      notifyPdfPartial: "PDF बन गई। कुछ फोटो में बैकग्राउंड रिमूवल स्किप हुआ।",
+      notifyPdfReady: "PDF सफलतापूर्वक बन गई!",
+      notifyOutputReady: "आउटपुट तैयार",
+      notifyReadyDownload: "डाउनलोड के लिए तैयार",
+      notifyCameraDenied: "कैमरा अनुमति नहीं मिली। कृपया अनुमति दें।",
+      notifyPermissionRequired: "अनुमति चाहिए",
+      notifyCapturedAuto: "फोटो कैप्चर और ऑटो-क्रॉप हो गई। चाहें तो एडजस्ट कर सकते हैं।",
+      notifyCapturedAdded: "फोटो कैप्चर होकर जोड़ दी गई!",
+      notifyReadyEnhance: "सुधार के लिए तैयार",
+      cameraGuideDefault: "एक चेहरा ओवल के अंदर रखें। आंखें सीधी और कंधे संतुलित रखें।",
+      cameraGuideNoFace: "पूरा चेहरा साफ दिखे, ऐसे ओवल के अंदर आएं।",
+      cameraGuideMultipleFaces: "फ्रेम में केवल एक व्यक्ति रखें।",
+      cameraGuideTooFar: "थोड़ा पास आएं ताकि सिर ओवल में ठीक से भरे।",
+      cameraGuideTooClose: "थोड़ा पीछे जाएं ताकि बाल, ठुड्डी और कंधे कटें नहीं।",
+      cameraGuideMoveLeft: "चेहरा केंद्र में लाने के लिए थोड़ा बाएं जाएं।",
+      cameraGuideMoveRight: "चेहरा केंद्र में लाने के लिए थोड़ा दाएं जाएं।",
+      cameraGuideMoveUp: "चेहरा ऊपर लाने के लिए कैमरा उठाएं या सीधे बैठें।",
+      cameraGuideMoveDown: "चेहरा थोड़ा नीचे लाने के लिए कैमरा नीचे करें।",
+      cameraGuideDark: "रोशनी कम है। खिड़की की ओर मुड़ें या सामने से सॉफ्ट लाइट लगाएं।",
+      cameraGuideBright: "ग्लेयर ज्यादा है। तेज रोशनी से दूर जाएं।",
+      cameraGuideUneven: "रोशनी असमान है। उजली तरफ मुड़ें या सामने से रोशनी दें।",
+      cameraGuideBlur: "इमेज सॉफ्ट है। स्थिर रहें, लेंस साफ करें, और फोकस का इंतजार करें।",
+      cameraGuideBackground: "बेहतर पासपोर्ट आउटपुट के लिए सादा बैकग्राउंड रखें।",
+      cameraGuideGood: "अच्छा है: चेहरा केंद्र में है, रोशनी समान है, और फोटो शार्प है। अब कैप्चर करें।"
+    };
+
+    function tr(key, vars = {}) {
+      const pack = I18N[currentLang] || I18N.en;
+      const template = pack[key] || I18N.en[key] || key;
+      return String(template).replace(/\{(\w+)\}/g, (_, name) => (
+        Object.prototype.hasOwnProperty.call(vars, name) ? vars[name] : `{${name}}`
+      ));
+    }
 
     function applyLanguage(lang) {
-      currentLang = (lang === "ne") ? "ne" : "en";
+      currentLang = SUPPORTED_LANGS.includes(lang) ? lang : "en";
       document.documentElement.setAttribute("lang", currentLang);
-      const t = I18N[currentLang];
+      const t = { ...I18N.en, ...(I18N[currentLang] || {}) };
       if (langToggle) langToggle.textContent = t.langShort;
+      if (langToggle) langToggle.title = currentLang === "en" ? "Switch language" : (currentLang === "ne" ? "भाषा बदल्नुहोस्" : "भाषा बदलें");
       localStorage.setItem("snapid-lang", currentLang);
       const guideEl = document.getElementById("cameraGuideText");
       if (guideEl) guideEl.textContent = t.cameraGuideDefault;
@@ -1977,6 +2559,7 @@
       setText('a[href="/guide"]', t.navGuide);
       setText('a[href="/history"]', t.navHistory);
       setText('a[href="/faq"]', t.faq);
+      setText(".api-badge span.text-xs", t.aiActive);
       setText(".inline-flex.items-center.gap-2 span", t.heroBadge);
       const heroH1 = document.querySelector("section h1");
       if (heroH1) {
@@ -1996,7 +2579,14 @@
       setText("#addMoreBtn", t.addMoreBtn);
       setText(".glass h4.text-lg", t.configTitle);
       setText("#toggleAdvanced", t.advancedSettings);
-      const enhanceLabel = document.querySelector('label.text-\\[10px\\].font-bold.uppercase.tracking-widest');
+      const advancedLabels = document.getElementById("advancedOptions")?.querySelectorAll("label") || [];
+      if (advancedLabels[0]) advancedLabels[0].textContent = t.printerDpi;
+      if (advancedLabels[1]) advancedLabels[1].textContent = t.widthLabel;
+      if (advancedLabels[2]) advancedLabels[2].textContent = t.heightLabel;
+      if (advancedLabels[3]) advancedLabels[3].textContent = t.spacingLabel;
+      if (advancedLabels[4]) advancedLabels[4].textContent = t.borderLabel;
+      if (advancedLabels[5]) advancedLabels[5].textContent = t.outputSheet;
+      const enhanceLabel = document.querySelector("#enhanceModeGroup")?.closest(".space-y-3")?.querySelector("label");
       if (enhanceLabel) enhanceLabel.textContent = t.enhanceMode;
       setButtonMode("auto", t.modeAuto);
       setButtonMode("dark", t.modeDark);
@@ -2013,15 +2603,23 @@
       setText("#cancelCameraBtn", t.cameraCancel);
       setTextKeepIcon("#retakeBtn", t.cameraRetake);
       setTextKeepIcon("#useCapturedBtn", t.cameraUse);
+      setText("#previewArea h4", t.previewTitle);
+      const stepLabels = document.querySelectorAll(".processing-steps .step-item span");
+      if (stepLabels[0]) stepLabels[0].textContent = t.stepRemoving;
+      if (stepLabels[1]) stepLabels[1].textContent = t.stepEnhancing;
+      if (stepLabels[2]) stepLabels[2].textContent = t.stepBundling;
+      try { updateDpiSummary(); } catch (_) { }
+      try { renderPhotoList(); } catch (_) { }
     }
 
     function initLanguage() {
       const saved = localStorage.getItem("snapid-lang");
-      if (saved === "en" || saved === "ne") {
+      if (SUPPORTED_LANGS.includes(saved)) {
         applyLanguage(saved);
         return;
       }
-      const auto = (navigator.language || "").toLowerCase().startsWith("ne") ? "ne" : "en";
+      const browserLang = (navigator.language || "").toLowerCase();
+      const auto = browserLang.startsWith("ne") ? "ne" : (browserLang.startsWith("hi") ? "hi" : "en");
       applyLanguage(auto);
     }
 
@@ -2038,7 +2636,8 @@
     });
     if (langToggle) {
       langToggle.addEventListener("click", () => {
-        applyLanguage(currentLang === "en" ? "ne" : "en");
+        const index = SUPPORTED_LANGS.indexOf(currentLang);
+        applyLanguage(SUPPORTED_LANGS[(index + 1) % SUPPORTED_LANGS.length]);
       });
     }
     initLanguage();
@@ -2138,6 +2737,7 @@
           createdAt: ts,
           detectedMode: metadata.detectedMode || "normal",
           bgRemoval: metadata.bgRemoval || "applied",
+          printDpi: metadata.printDpi || "300",
           photoCount: metadata.photoCount || 0,
           blob: pdfBlob
         };
@@ -2169,6 +2769,9 @@
     const toggleAdvanced = document.getElementById("toggleAdvanced");
     const advancedOptions = document.getElementById("advancedOptions");
     const advancedChevron = document.getElementById("advancedChevron");
+    const printDpiSelect = document.getElementById("printDpi");
+    const dpiSummary = document.getElementById("dpiSummary");
+    const layoutInputIds = ["width", "height", "spacing", "border"];
     const cropperModal = document.getElementById("cropperModal");
     const cropModalImage = document.getElementById("cropModalImage");
     const confirmCropBtn = document.getElementById("confirmCropBtn");
@@ -2196,21 +2799,21 @@
 
     function startProcessingSteps() {
       const steps = [
-        { id: "step1", line: "line1", msg: "Removing Background" },
-        { id: "step2", line: "line2", msg: "Enhancing Output" },
-        { id: "step3", line: null, msg: "Finalizing PDF Content" },
+        { id: "step1", line: "line1", msg: tr("processingRemoving") },
+        { id: "step2", line: "line2", msg: tr("processingEnhancing") },
+        { id: "step3", line: null, msg: tr("processingFinalizing") },
       ];
 
       // Reset state
       currentProgress = 0;
       progressBar.style.width = "0%";
       estSeconds = Math.max(5, photos.length * 4); // ~4s per photo
-      estTimeLabel.textContent = `Est. ${estSeconds}s remaining`;
+      estTimeLabel.textContent = tr("estRemaining", { seconds: estSeconds });
 
       // Fictional Speed Simulation
       const updatePerf = () => {
         const speed = (Math.random() * (1200 - 450) + 450).toFixed(1);
-        perfSpeed.textContent = `SPEED: ${speed} MB/s`;
+        perfSpeed.textContent = tr("perfSpeed", { speed });
       };
       updatePerf();
       perfInterval = setInterval(updatePerf, 2000);
@@ -2220,7 +2823,7 @@
       progressTimer = setInterval(() => {
         const elapsed = (Date.now() - start) / 1000;
         const remaining = Math.max(1, Math.ceil(estSeconds - elapsed));
-        estTimeLabel.textContent = `Est. ${remaining}s remaining`;
+        estTimeLabel.textContent = tr("estRemaining", { seconds: remaining });
 
         // Instant start: 0-30% in first 500ms
         if (elapsed < 0.5) {
@@ -2260,7 +2863,7 @@
         clearInterval(perfInterval);
         clearTimeout(stepTimer);
         progressBar.style.width = "100%";
-        estTimeLabel.textContent = "Processing Complete";
+        estTimeLabel.textContent = tr("processingComplete");
 
         // Mark all steps as done
         steps.forEach((s) => {
@@ -2279,7 +2882,7 @@
     function showNotification(msg, isError = true, sub = "") {
       clearTimeout(notifTimeout);
       notifMsg.textContent = msg;
-      notifSub.textContent = sub || (isError ? "Action Failed" : "Step Completed");
+      notifSub.textContent = sub || (isError ? tr("notificationFailed") : tr("notificationDone"));
       notifIcon.className = `w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${isError ? "bg-rose-500/20 text-rose-400" : "bg-emerald-500/20 text-emerald-400"}`;
       notifIcon.innerHTML = isError
         ? `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`
@@ -2327,43 +2930,48 @@
         card.className = "photo-card rounded-2xl p-3 sm:p-4 flex items-center gap-3 sm:gap-5";
         card.style.animationDelay = (idx * 0.06) + "s";
         card.innerHTML = `
-            <div class="relative flex-shrink-0">
-              <button type="button" class="photo-thumb-btn" data-id="${photo.id}" title="Click to enlarge">
+            <div class="photo-card-thumb relative flex-shrink-0">
+              <button type="button" class="photo-thumb-btn" data-id="${photo.id}" title="${tr("previewThumbTitle")}">
                 <img src="${photo.previewUrl}" class="w-14 h-[72px] object-cover rounded-xl"
                      style="border:1px solid var(--border)" />
               </button>
               ${photo.croppedFile ? `
                 <div class="absolute -top-1.5 -right-1.5 bg-indigo-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md leading-none">
-                  FIXED
+                  ${tr("fixedBadge")}
                 </div>` : ""}
             </div>
-            <div class="flex-1 min-w-0">
+            <div class="photo-card-main flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-1">
                 <p class="text-sm font-bold truncate" style="color:var(--text-primary)">${photo.originalFile.name}</p>
                 <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider whitespace-nowrap"
                       style="background:var(--accent-muted); color:var(--accent); border:1px solid var(--accent-border)">
-                  AI Enhanced
+                  ${tr("photoAiEnhanced")}
                 </span>
+                ${photo.bgRemovalStatus === "skipped" ? `
+                  <span class="inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider whitespace-nowrap"
+                        style="background:rgba(16,185,129,0.12); color:#059669; border:1px solid rgba(16,185,129,0.32)">
+                    ${tr("bgSkipped")}
+                  </span>` : ""}
               </div>
               <div class="flex items-center gap-2">
                 <span class="text-[10px] font-bold uppercase tracking-wider" style="color:var(--text-muted)">
-                  ${photo.cropSource === "manual" ? "Custom Crop" : (photo.cropSource === "auto" ? "Auto Crop" : "Original")}
+                  ${photo.cropSource === "manual" ? tr("cropManual") : (photo.cropSource === "auto" ? tr("cropAuto") : tr("cropOriginal"))}
                 </span>
                 <span class="w-1 h-1 rounded-full" style="background:var(--border)"></span>
                 <span class="text-[10px] font-bold uppercase tracking-wider" style="color:var(--accent)">
-                  ${photo.copies} Copies
+                  ${tr("copiesValue", { count: photo.copies })}
                 </span>
               </div>
             </div>
-            <div class="card-meta-bg flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl">
-              <span class="text-[9px] font-bold uppercase tracking-wider" style="color:var(--text-muted)">Copies</span>
+            <div class="photo-card-meta card-meta-bg flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl">
+              <span class="text-[9px] font-bold uppercase tracking-wider" style="color:var(--text-muted)">${tr("copiesLabel")}</span>
               <input type="number" value="${photo.copies}" min="1" max="54"
                 class="card-meta-input" data-id="${photo.id}" />
             </div>
-            <div class="flex gap-2 flex-shrink-0">
+            <div class="photo-card-actions flex gap-2 flex-shrink-0">
               <button class="crop-btn p-2.5 rounded-xl transition-all duration-200"
                 style="background:var(--accent-muted); color:var(--accent); border:1px solid var(--accent-border)"
-                data-id="${photo.id}" title="Crop Photo"
+                data-id="${photo.id}" title="${tr("cropTitle")}"
                 onmouseover="this.style.background='var(--accent)';this.style.color='#fff';this.style.borderColor='var(--accent)'"
                 onmouseout="this.style.background='var(--accent-muted)';this.style.color='var(--accent)';this.style.borderColor='var(--accent-border)'">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none">
@@ -2372,7 +2980,7 @@
               </button>
               <button class="remove-btn p-2.5 rounded-xl transition-all duration-200"
                 style="background:rgba(244,63,94,0.1); color:#f43f5e; border:1px solid rgba(244,63,94,0.22)"
-                data-id="${photo.id}" title="Remove"
+                data-id="${photo.id}" title="${tr("removeTitle")}"
                 onmouseover="this.style.background='#f43f5e';this.style.color='#fff';this.style.borderColor='#f43f5e'"
                 onmouseout="this.style.background='rgba(244,63,94,0.1)';this.style.color='#f43f5e';this.style.borderColor='rgba(244,63,94,0.22)'">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none">
@@ -2475,7 +3083,7 @@
       let autoCropped = 0;
       for (const file of Array.from(files)) {
         if (!validTypes.includes(file.type)) continue;
-        const photo = { id: nextId++, originalFile: file, croppedFile: null, previewUrl: URL.createObjectURL(file), copies: 6, cropSource: "original", sourceType: "upload" };
+        const photo = { id: nextId++, originalFile: file, croppedFile: null, previewUrl: URL.createObjectURL(file), copies: 6, cropSource: "original", sourceType: "upload", bgRemovalStatus: null };
         photos.push(photo);
         added++;
         try {
@@ -2484,13 +3092,14 @@
           photo.croppedFile = autoCroppedFile;
           photo.previewUrl = URL.createObjectURL(autoCroppedFile);
           photo.cropSource = "auto";
+          photo.bgRemovalStatus = null;
           autoCropped++;
         } catch (e) {
           console.warn("Auto-crop failed, keeping original:", e);
         }
       }
-      if (added === 0) showNotification("Please upload valid image files (JPG, PNG, WEBP).");
-      if (autoCropped > 0) showNotification(`Auto-cropped ${autoCropped} photo(s). You can still refine with manual Crop.`, false, "Smart Crop Applied");
+      if (added === 0) showNotification(tr("notifyInvalidFiles"));
+      if (autoCropped > 0) showNotification(tr("notifyAutoCrop", { count: autoCropped }), false, tr("notifyAutoCropTitle"));
       renderPhotoList();
     }
 
@@ -2524,10 +3133,11 @@
           photo.croppedFile = new File([blob], "cropped-" + photo.originalFile.name, { type: "image/png" });
           photo.previewUrl = URL.createObjectURL(blob);
           photo.cropSource = "manual";
+          photo.bgRemovalStatus = null;
         activeCropper.destroy(); activeCropper = null; pendingCropId = null;
         cropperModal.classList.add("hidden");
         renderPhotoList();
-        showNotification("Photo cropped successfully.", false);
+        showNotification(tr("notifyCropSuccess"), false);
       }, "image/png");
     });
     cancelCropBtn.addEventListener("click", () => {
@@ -2545,6 +3155,12 @@
       dark: "🌙 Low Light → Brightened",
       warm: "🎨 Warm Tone → Color Corrected",
       normal: "⚖️ Natural → Enhanced",
+    };
+    const MODE_LABEL_KEYS = {
+      dark: "modeLabelDark",
+      warm: "modeLabelWarm",
+      normal: "modeLabelNormal",
+      none: "modeLabelNone",
     };
     document.querySelectorAll(".enhance-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -2564,13 +3180,43 @@
       advancedChevron.style.transform = isOpen ? "rotate(0deg)" : "rotate(180deg)";
     });
 
+    function clampNumber(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function updateDpiSummary() {
+      const dpi = parseInt(printDpiSelect.value, 10) || 300;
+      const a4Width = Math.round((210 / 25.4) * dpi);
+      const a4Height = Math.round((297 / 25.4) * dpi);
+      dpiSummary.textContent = tr("dpiSummary", { dpi, width: a4Width, height: a4Height });
+    }
+
+    let currentPrintDpi = parseInt(printDpiSelect.value, 10) || 300;
+    printDpiSelect.addEventListener("change", () => {
+      const nextDpi = parseInt(printDpiSelect.value, 10) || 300;
+      const scale = nextDpi / currentPrintDpi;
+      layoutInputIds.forEach((id) => {
+        const input = document.getElementById(id);
+        const min = parseInt(input.min || "0", 10);
+        const max = parseInt(input.max || "9999", 10);
+        const current = parseInt(input.value || "0", 10);
+        input.value = clampNumber(Math.round(current * scale), min, max);
+      });
+      currentPrintDpi = nextDpi;
+      updateDpiSummary();
+    });
+    updateDpiSummary();
+
     /* =====================================================
        GENERATE PDF
     ===================================================== */
     generateBtn.addEventListener("click", () => {
-      if (photos.length === 0) { showNotification("Please upload at least one photo."); return; }
+      if (photos.length === 0) { showNotification(tr("notifyNeedPhoto")); return; }
 
       const formData = new FormData();
+      const submittedPhotoIds = photos.map((photo) => photo.id);
+      photos.forEach((photo) => { photo.bgRemovalStatus = null; });
+      renderPhotoList();
       photos.forEach((photo, i) => {
         formData.append(`image_${i}`, photo.croppedFile || photo.originalFile);
         formData.append(`copies_${i}`, photo.copies);
@@ -2580,6 +3226,7 @@
       formData.append("height", document.getElementById("height").value);
       formData.append("spacing", document.getElementById("spacing").value);
       formData.append("border", document.getElementById("border").value);
+      formData.append("print_dpi", printDpiSelect.value);
       formData.append("enhance_mode", selectedEnhanceMode);
 
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -2593,6 +3240,8 @@
 
       let _detectedMode = null;
       let _bgRemovalStatus = "applied";
+      let _bgRemovalStates = [];
+      let _printDpi = printDpiSelect.value;
       fetch(`${API_BASE}/process`, {
         method: "POST",
         body: formData,
@@ -2601,17 +3250,22 @@
         .then(async (res) => {
           _detectedMode = res.headers.get("X-Detected-Mode");
           _bgRemovalStatus = res.headers.get("X-BG-Removal") || "applied";
+          _printDpi = res.headers.get("X-Print-DPI") || _printDpi;
+          _bgRemovalStates = (res.headers.get("X-BG-Removal-States") || "")
+            .split(",")
+            .map((state) => state.trim())
+            .filter(Boolean);
           if (!res.ok) {
             let payload = null;
             try { payload = await res.json(); } catch (_) { }
             const serverMsg = payload && payload.error ? payload.error : "";
 
-            if (res.status === 429) { showNotification(serverMsg || "API quota exceeded. Please try again later."); return null; }
-            if (res.status === 422 || res.status === 410) { showNotification(serverMsg || "Cannot detect face/background in one of the images."); return null; }
-            if (res.status === 400) { showNotification(serverMsg || "Invalid input. Please review your settings."); return null; }
-            if (res.status === 401) { showNotification("Session expired. Please unlock and try again."); return null; }
-            if (res.status === 502 || res.status === 503) { showNotification(serverMsg || "Image service is temporarily unavailable. Please retry."); return null; }
-            if (res.status === 500) { showNotification(serverMsg || "Internal server error. Please try again."); return null; }
+            if (res.status === 429) { showNotification(serverMsg || tr("notifyQuota")); return null; }
+            if (res.status === 422 || res.status === 410) { showNotification(serverMsg || tr("notifyDetectFail")); return null; }
+            if (res.status === 400) { showNotification(serverMsg || tr("notifyInvalidInput")); return null; }
+            if (res.status === 401) { showNotification(tr("notifySessionExpired")); return null; }
+            if (res.status === 502 || res.status === 503) { showNotification(serverMsg || tr("notifyServiceDown")); return null; }
+            if (res.status === 500) { showNotification(serverMsg || tr("notifyServerError")); return null; }
 
             throw new Error(serverMsg || "Processing failed.");
           }
@@ -2621,7 +3275,7 @@
           stopProcessing();
           if (!blob) return;
           if (selectedEnhanceMode === "auto" && _detectedMode && MODE_LABELS[_detectedMode]) {
-            detectedModeLabel.textContent = "AI detected: " + MODE_LABELS[_detectedMode];
+            detectedModeLabel.textContent = tr("aiDetected", { mode: tr(MODE_LABEL_KEYS[_detectedMode] || "modeLabelNormal") });
             detectedModeLabel.classList.remove("hidden");
           }
           const url = URL.createObjectURL(blob);
@@ -2629,18 +3283,24 @@
           pdfPreview.src = url;
           downloadBtn.href = url;
           downloadBtn.classList.remove("hidden");
+          _bgRemovalStates.forEach((state, index) => {
+            const photo = photos.find((p) => p.id === submittedPhotoIds[index]);
+            if (photo) photo.bgRemovalStatus = state;
+          });
+          renderPhotoList();
           savePdfToHistory(blob, {
             detectedMode: _detectedMode,
             bgRemoval: _bgRemovalStatus,
+            printDpi: _printDpi,
             photoCount: photos.length
           }).catch((e) => console.error("History save failed:", e));
           if (_bgRemovalStatus === "partial") {
-            showNotification("PDF generated. Some images skipped background removal.", false, "Output ready");
+            showNotification(tr("notifyPdfPartial"), false, tr("notifyOutputReady"));
           } else {
-            showNotification("PDF generated successfully!", false, "Ready to download");
+            showNotification(tr("notifyPdfReady"), false, tr("notifyReadyDownload"));
           }
         })
-        .catch((err) => { console.error(err); showNotification("Image processing failed. Please try again."); })
+        .catch((err) => { console.error(err); showNotification(tr("notifyProcessingFailed")); })
         .finally(() => { loading.classList.add("hidden"); stopProcessing(); generateBtn.disabled = false; });
     });
 
@@ -2667,9 +3327,16 @@
     let facingMode = "user";
     let capturedBlob = null;
     let cameraGuideInterval = null;
+    let cameraFaceDetector = null;
+    let cameraGuideBusy = false;
 
     function getGuideTextKey() {
       return (I18N[currentLang] || I18N.en);
+    }
+
+    function getCameraGuideText(key) {
+      const t = getGuideTextKey();
+      return t[key] || CAMERA_GUIDE_FALLBACKS[key] || CAMERA_GUIDE_FALLBACKS.cameraGuideDefault;
     }
 
     function stopCameraGuideLoop() {
@@ -2679,43 +3346,128 @@
       }
     }
 
-    function updateCameraGuide() {
+    async function updateCameraGuide() {
+      if (cameraGuideBusy) return;
       const guideEl = document.getElementById("cameraGuideText");
       if (!guideEl || !cameraVideo || !cameraStream) return;
       const vw = cameraVideo.videoWidth || 0;
       const vh = cameraVideo.videoHeight || 0;
       if (!vw || !vh) return;
+      cameraGuideBusy = true;
 
-      const sample = document.createElement("canvas");
-      sample.width = 160;
-      sample.height = 120;
-      const ctx = sample.getContext("2d");
-      if (!ctx) return;
-      ctx.drawImage(cameraVideo, 0, 0, sample.width, sample.height);
-      const frame = ctx.getImageData(0, 0, sample.width, sample.height).data;
+      try {
+        const sample = document.createElement("canvas");
+        sample.width = 192;
+        sample.height = 144;
+        const ctx = sample.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(cameraVideo, 0, 0, sample.width, sample.height);
+        const frame = ctx.getImageData(0, 0, sample.width, sample.height).data;
 
-      let luminanceSum = 0;
-      let edgeDiff = 0;
-      for (let i = 0; i < frame.length; i += 4) {
-        const y = 0.2126 * frame[i] + 0.7152 * frame[i + 1] + 0.0722 * frame[i + 2];
-        luminanceSum += y;
-        if (i >= 4) {
-          const py = 0.2126 * frame[i - 4] + 0.7152 * frame[i - 3] + 0.0722 * frame[i - 2];
-          edgeDiff += Math.abs(y - py);
+        let luminanceSum = 0;
+        let leftLum = 0;
+        let rightLum = 0;
+        let centerLum = 0;
+        let leftCount = 0;
+        let rightCount = 0;
+        let centerCount = 0;
+        let darkPixels = 0;
+        let brightPixels = 0;
+        let skinLikePixels = 0;
+        let edgeDiff = 0;
+
+        for (let y = 0; y < sample.height; y++) {
+          for (let x = 0; x < sample.width; x++) {
+            const i = (y * sample.width + x) * 4;
+            const r = frame[i];
+            const g = frame[i + 1];
+            const b = frame[i + 2];
+            const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            luminanceSum += lum;
+            if (lum < 45) darkPixels += 1;
+            if (lum > 238) brightPixels += 1;
+            if (r > 70 && g > 45 && b > 30 && r > b && r >= g - 8 && Math.max(r, g, b) - Math.min(r, g, b) > 18) {
+              skinLikePixels += 1;
+            }
+            if (x < sample.width * 0.35) {
+              leftLum += lum;
+              leftCount += 1;
+            } else if (x > sample.width * 0.65) {
+              rightLum += lum;
+              rightCount += 1;
+            } else if (y > sample.height * 0.15 && y < sample.height * 0.85) {
+              centerLum += lum;
+              centerCount += 1;
+            }
+            if (x > 0) {
+              const pi = i - 4;
+              const prevLum = 0.2126 * frame[pi] + 0.7152 * frame[pi + 1] + 0.0722 * frame[pi + 2];
+              edgeDiff += Math.abs(lum - prevLum);
+            }
+            if (y > 0) {
+              const pi = i - sample.width * 4;
+              const prevLum = 0.2126 * frame[pi] + 0.7152 * frame[pi + 1] + 0.0722 * frame[pi + 2];
+              edgeDiff += Math.abs(lum - prevLum);
+            }
+          }
         }
-      }
-      const avgLum = luminanceSum / (frame.length / 4);
-      const sharpness = edgeDiff / (frame.length / 4);
-      const t = getGuideTextKey();
 
-      if (avgLum < 65) {
-        guideEl.textContent = t.cameraGuideDark;
-      } else if (avgLum > 210) {
-        guideEl.textContent = t.cameraGuideBright;
-      } else if (sharpness < 6) {
-        guideEl.textContent = t.cameraGuideBlur;
-      } else {
-        guideEl.textContent = t.cameraGuideGood;
+        const pixelCount = frame.length / 4;
+        const avgLum = luminanceSum / pixelCount;
+        const sharpness = edgeDiff / (pixelCount * 2);
+        const brightRatio = brightPixels / pixelCount;
+        const darkRatio = darkPixels / pixelCount;
+        const skinRatio = skinLikePixels / pixelCount;
+        const sideLightDiff = Math.abs((leftLum / Math.max(leftCount, 1)) - (rightLum / Math.max(rightCount, 1)));
+        const centerAvgLum = centerLum / Math.max(centerCount, 1);
+
+        let guideKey = "cameraGuideGood";
+        if (avgLum < 70 || darkRatio > 0.38 || centerAvgLum < 62) {
+          guideKey = "cameraGuideDark";
+        } else if (avgLum > 208 || brightRatio > 0.08) {
+          guideKey = "cameraGuideBright";
+        } else if (sideLightDiff > 38) {
+          guideKey = "cameraGuideUneven";
+        } else if (sharpness < 7.5) {
+          guideKey = "cameraGuideBlur";
+        } else if (cameraFaceDetector) {
+          try {
+            const faces = await cameraFaceDetector.detect(cameraVideo);
+            if (!faces || faces.length === 0) {
+              guideKey = skinRatio < 0.015 ? "cameraGuideNoFace" : "cameraGuideDefault";
+            } else if (faces.length > 1) {
+              guideKey = "cameraGuideMultipleFaces";
+            } else {
+              const box = faces[0].boundingBox;
+              const rawFaceCenterX = (box.x + box.width / 2) / vw;
+              const faceCenterX = facingMode === "user" ? 1 - rawFaceCenterX : rawFaceCenterX;
+              const faceCenterY = (box.y + box.height / 2) / vh;
+              const faceWidth = box.width / vw;
+              const faceHeight = box.height / vh;
+              if (faceWidth < 0.2 || faceHeight < 0.25) {
+                guideKey = "cameraGuideTooFar";
+              } else if (faceWidth > 0.56 || faceHeight > 0.72) {
+                guideKey = "cameraGuideTooClose";
+              } else if (faceCenterX < 0.43) {
+                guideKey = "cameraGuideMoveRight";
+              } else if (faceCenterX > 0.57) {
+                guideKey = "cameraGuideMoveLeft";
+              } else if (faceCenterY < 0.34) {
+                guideKey = "cameraGuideMoveDown";
+              } else if (faceCenterY > 0.58) {
+                guideKey = "cameraGuideMoveUp";
+              }
+            }
+          } catch (e) {
+            cameraFaceDetector = null;
+          }
+        } else if (skinRatio < 0.012) {
+          guideKey = "cameraGuideNoFace";
+        }
+
+        guideEl.textContent = getCameraGuideText(guideKey);
+      } finally {
+        cameraGuideBusy = false;
       }
     }
 
@@ -2726,11 +3478,20 @@
           video: { facingMode, width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false
         });
         cameraVideo.srcObject = cameraStream;
+        if ("FaceDetector" in window) {
+          try {
+            cameraFaceDetector = new FaceDetector({ fastMode: true, maxDetectedFaces: 2 });
+          } catch (e) {
+            cameraFaceDetector = null;
+          }
+        } else {
+          cameraFaceDetector = null;
+        }
         stopCameraGuideLoop();
-        cameraGuideInterval = setInterval(updateCameraGuide, 700);
+        cameraGuideInterval = setInterval(updateCameraGuide, 650);
       } catch (err) {
         console.error("Camera access error:", err);
-        showNotification("Camera access denied. Please allow camera permissions.", true, "Permission Required");
+        showNotification(tr("notifyCameraDenied"), true, tr("notifyPermissionRequired"));
         closeCameraModal();
       }
     }
@@ -2738,6 +3499,8 @@
     function stopCamera() {
       if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
       cameraVideo.srcObject = null;
+      cameraFaceDetector = null;
+      cameraGuideBusy = false;
       stopCameraGuideLoop();
     }
 
@@ -2803,7 +3566,8 @@
         previewUrl: URL.createObjectURL(capturedBlob),
         copies: 6,
         cropSource: "original",
-        sourceType: "camera"
+        sourceType: "camera",
+        bgRemovalStatus: null
       };
 
       try {
@@ -2812,6 +3576,7 @@
         photo.croppedFile = autoCroppedFile;
         photo.previewUrl = URL.createObjectURL(autoCroppedFile);
         photo.cropSource = "auto";
+        photo.bgRemovalStatus = null;
       } catch (e) {
         console.warn("Webcam auto-crop failed, keeping original capture:", e);
       }
@@ -2819,9 +3584,9 @@
       photos.push(photo);
       renderPhotoList();
       if (photo.cropSource === "auto") {
-        showNotification("Photo captured and auto-cropped! You can still adjust manually.", false, "Smart Crop Applied");
+        showNotification(tr("notifyCapturedAuto"), false, tr("notifyAutoCropTitle"));
       } else {
-        showNotification("Photo captured and added!", false, "Ready to enhance");
+        showNotification(tr("notifyCapturedAdded"), false, tr("notifyReadyEnhance"));
       }
       closeCameraModal();
     });

@@ -1,0 +1,119 @@
+GITHUB ACTIONS SETUP - PRIVATE HUGGING FACE SPACE KEEPALIVE
+
+Purpose:
+- Keep your private Hugging Face Space warm by pinging it every 5 minutes.
+- Use GitHub Actions only.
+- Store your private Hugging Face token safely in GitHub Secrets.
+
+Your Hugging Face details:
+- Space page:
+  https://huggingface.co/spaces/aryan56789raut/my-rembg
+- App URL to ping:
+  https://aryan56789raut-my-rembg.hf.space/
+
+Important:
+- Use the .hf.space app URL for keepalive.
+- Do not use the huggingface.co/spaces page URL as HF_SPACE_URL.
+- Do not write your real HF token inside any code file.
+
+Files used:
+- Workflow file:
+  .github/workflows/hf-space-keepalive.yml
+- This guide:
+  GITHUB_HF_SPACE_KEEPALIVE_SETUP.txt
+
+STEP 1 - Confirm workflow file exists:
+- Check this file exists in your project:
+  .github/workflows/hf-space-keepalive.yml
+- This workflow runs every 5 minutes.
+- It also supports manual runs from the GitHub Actions tab.
+
+STEP 2 - Push project to GitHub:
+- Commit the workflow file.
+- Push it to your GitHub repository.
+- Make sure it is on your default branch, usually:
+  main
+
+STEP 3 - Add HF_SPACE_URL secret:
+- Open your GitHub repository in browser.
+- Go to:
+  Settings > Secrets and variables > Actions
+- Click:
+  New repository secret
+- Secret name:
+  HF_SPACE_URL
+- Secret value:
+  https://aryan56789raut-my-rembg.hf.space/
+- Click:
+  Add secret
+
+STEP 4 - Add HF_TOKEN secret:
+- Stay on:
+  Settings > Secrets and variables > Actions
+- Click:
+  New repository secret
+- Secret name:
+  HF_TOKEN
+- Secret value:
+  hf_your_private_hugging_face_token_here
+- Click:
+  Add secret
+
+STEP 5 - Make sure HF_TOKEN has access:
+- Your Hugging Face token must be able to access your private Space.
+- If the workflow returns 401 or 403, the token is wrong or does not have permission.
+- If needed, create a new token from Hugging Face settings and use that as HF_TOKEN.
+
+STEP 6 - Run workflow manually once:
+- Open your GitHub repository.
+- Go to:
+  Actions
+- Select:
+  Keep Private Hugging Face Space Awake
+- Click:
+  Run workflow
+- Wait for the run to finish.
+- Green check means setup is working.
+
+STEP 7 - Automatic schedule:
+- The workflow uses this cron schedule:
+  */5 * * * *
+- This means GitHub tries to run it every 5 minutes.
+- GitHub cron uses UTC time.
+- Scheduled runs can be delayed sometimes because GitHub Actions scheduling is best-effort.
+
+STEP 8 - What the workflow does:
+- It sends a GET request to:
+  https://aryan56789raut-my-rembg.hf.space/
+- It sends this private auth header:
+  Authorization: Bearer HF_TOKEN
+- This header is required because your Hugging Face Space is private.
+
+STEP 9 - Troubleshooting:
+- Error: HF_SPACE_URL secret is missing
+  Fix: Add the HF_SPACE_URL GitHub secret.
+- Error: HF_TOKEN secret is missing
+  Fix: Add the HF_TOKEN GitHub secret.
+- Error: 401 or 403
+  Fix: Use a Hugging Face token that has access to the private Space.
+- Error: timeout
+  Fix: The Space may be slow to wake. Run manually again or increase max-time in the workflow.
+- Workflow does not appear
+  Fix: Make sure .github/workflows/hf-space-keepalive.yml is pushed to the default branch.
+
+Best practice:
+- Ping homepage or a lightweight health endpoint.
+- Do not ping heavy AI generation routes every 5 minutes.
+- Keep your token only in GitHub Secrets.
+- Never commit your real HF token.
+
+Current workflow code summary:
+- Schedule:
+  Every 5 minutes
+- Manual trigger:
+  Enabled
+- Secrets used:
+  HF_SPACE_URL
+  HF_TOKEN
+- Auth method:
+  Authorization: Bearer HF_TOKEN

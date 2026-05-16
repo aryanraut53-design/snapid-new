@@ -16,6 +16,7 @@ from flask_wtf.csrf import CSRFProtect, generate_csrf
 import hashlib
 import re
 import logging
+import threading
 from supabase import create_client, Client
 from gradio_client import Client as GradioClient, handle_file
 import tempfile
@@ -72,16 +73,41 @@ SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 HF_API_TOKEN = os.getenv("HF_API_TOKEN")
 HF_SPACE_ID = os.getenv("HF_SPACE_ID")
+HF_SPACE_URL = os.getenv("HF_SPACE_URL")
 HF_API_NAME = os.getenv("HF_API_NAME", "/remove_bg")
 
-# Initialize HF Client globally for better speed
+# Initialize HF Client lazily so cold starts do not fail before a request.
 hf_client = None
-if HF_SPACE_ID:
+hf_client_lock = threading.Lock()
+
+
+def get_hf_client():
+    global hf_client
+    if hf_client:
+        return hf_client
+
+    hf_source = HF_SPACE_URL or HF_SPACE_ID
+    if not hf_source:
+        raise RuntimeError("HF_SPACE_ID or HF_SPACE_URL is not configured")
+
+    with hf_client_lock:
+        if hf_client:
+            return hf_client
+        logger.info("Connecting to HF Space: %s", hf_source)
+        hf_client = GradioClient(
+            hf_source,
+            token=HF_API_TOKEN,
+            verbose=False,
+            httpx_kwargs={"timeout": 25},
+        )
+        return hf_client
+
+
+if HF_SPACE_ID or HF_SPACE_URL:
     try:
-        logger.info(f"Connecting to HF Space: {HF_SPACE_ID}")
-        hf_client = GradioClient(HF_SPACE_ID, token=HF_API_TOKEN)
+        get_hf_client()
     except Exception as e:
-        logger.error(f"Failed to connect to Hugging Face: {e}")
+        logger.error("Failed to connect to Hugging Face. Will retry during processing: %s", e)
 
 
 def run_hf_background_removal(image_path: str):
@@ -97,11 +123,12 @@ def run_hf_background_removal(image_path: str):
             api_candidates.append(candidate)
 
     last_error = None
+    client = get_hf_client()
     for api_name in api_candidates:
         try:
             if api_name:
-                return hf_client.predict(img=handle_file(image_path), api_name=api_name)
-            return hf_client.predict(img=handle_file(image_path))
+                return client.predict(img=handle_file(image_path), api_name=api_name)
+            return client.predict(img=handle_file(image_path))
         except Exception as e:
             last_error = e
             err = str(e).lower()
@@ -114,8 +141,27 @@ def run_hf_background_removal(image_path: str):
 
     raise last_error if last_error else RuntimeError("HF prediction failed")
 
+
+def read_hf_result(result) -> bytes:
+    """Normalize common gradio_client file return shapes into bytes."""
+    if isinstance(result, (list, tuple)):
+        result = result[0] if result else None
+    if isinstance(result, dict):
+        result = result.get("path") or result.get("name") or result.get("url")
+    if not result:
+        raise RuntimeError("HF Space returned an empty result")
+
+    result = str(result)
+    if result.startswith(("http://", "https://")):
+        response = requests.get(result, timeout=25)
+        response.raise_for_status()
+        return response.content
+
+    with open(result, "rb") as f:
+        return f.read()
+
 # Strict check for required production keys
-if not all([CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, HF_SPACE_ID]):
+if not all([CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET]) or not (HF_SPACE_ID or HF_SPACE_URL):
     logger.error("Missing critical environment variables (Cloudinary or Hugging Face config)")
 
 if not FLASK_SECRET_KEY:
@@ -511,42 +557,126 @@ def detect_image_mode(img_bytes):
         return "normal"
 
 
+def has_solid_white_background(img_bytes) -> bool:
+    """
+    Return True when the visible background already matches the white print sheet.
+
+    This intentionally uses a conservative border/corner check. Passport subjects
+    usually sit in the center, so a genuinely white backdrop should dominate the
+    outer strips and corners with very little color variation.
+    """
+    try:
+        img = Image.open(BytesIO(img_bytes))
+        img = ImageOps.exif_transpose(img)
+
+        # If an image is already transparent, it is not a solid white-background
+        # source; let the normal pipeline preserve its alpha handling.
+        if img.mode in ("RGBA", "LA"):
+            alpha = img.getchannel("A")
+            if alpha.getextrema()[0] < 250:
+                return False
+
+        img = img.convert("RGB")
+        img.thumbnail((320, 320), Image.Resampling.BILINEAR)
+        width, height = img.size
+        if width < 24 or height < 24:
+            return False
+
+        strip = max(8, min(24, int(min(width, height) * 0.08)))
+        corner = max(strip, min(40, int(min(width, height) * 0.14)))
+
+        border_regions = [
+            img.crop((0, 0, width, strip)),
+            img.crop((0, height - strip, width, height)),
+            img.crop((0, 0, strip, height)),
+            img.crop((width - strip, 0, width, height)),
+        ]
+        corner_regions = [
+            img.crop((0, 0, corner, corner)),
+            img.crop((width - corner, 0, width, corner)),
+            img.crop((0, height - corner, corner, height)),
+            img.crop((width - corner, height - corner, width, height)),
+        ]
+
+        def white_stats(regions):
+            pixels = []
+            for region in regions:
+                pixels.extend(region.getdata())
+
+            if not pixels:
+                return 0.0, 0.0, (0.0, 0.0, 0.0)
+
+            white_count = 0
+            luminance_values = []
+            channel_sums = [0, 0, 0]
+            for r, g, b in pixels:
+                channel_sums[0] += r
+                channel_sums[1] += g
+                channel_sums[2] += b
+                luminance = (r + g + b) / 3.0
+                luminance_values.append(luminance)
+                if r >= 238 and g >= 238 and b >= 238 and (max(r, g, b) - min(r, g, b)) <= 16:
+                    white_count += 1
+
+            mean_luma = sum(luminance_values) / len(luminance_values)
+            variance = sum((value - mean_luma) ** 2 for value in luminance_values) / len(luminance_values)
+            means = tuple(total / len(pixels) for total in channel_sums)
+            return white_count / len(pixels), variance ** 0.5, means
+
+        border_white_ratio, border_luma_std, border_means = white_stats(border_regions)
+        corner_white_ratio, corner_luma_std, corner_means = white_stats(corner_regions)
+        border_region_stats = [white_stats([region]) for region in border_regions]
+        corner_region_stats = [white_stats([region]) for region in corner_regions]
+        border_mean_min = min(border_means)
+        corner_mean_min = min(corner_means)
+
+        return (
+            border_white_ratio >= 0.92
+            and corner_white_ratio >= 0.96
+            and all(stats[0] >= 0.88 for stats in border_region_stats)
+            and all(stats[0] >= 0.94 for stats in corner_region_stats)
+            and border_luma_std <= 10
+            and corner_luma_std <= 8
+            and border_mean_min >= 242
+            and corner_mean_min >= 245
+        )
+    except Exception as e:
+        logger.warning("White-background detection skipped due to error: %s", e)
+        return False
+
+
 def process_single_image(input_image_bytes, enhance_mode="auto", source_type="upload"):
     """Remove background via Hugging Face Space and enhance via Cloudinary."""
 
     bg_removed_ok = False
+    bg_removed_content = input_image_bytes
 
-    if not hf_client:
-        logger.warning("HF client not ready. Falling back to original image without background removal.")
-        bg_removed_content = input_image_bytes
-
+    # Step 1: Background removal via Hugging Face Space
+    temp_path = None
+    if has_solid_white_background(input_image_bytes):
+        logger.info("DEBUG: Solid white background detected; skipping background removal for this image")
     else:
-        # Step 1: Background removal via Hugging Face Space
-        temp_path = None
         try:
-            logger.info("DEBUG: Removing background via Hugging Face API...")
-            
-            # Save bytes to a temporary file because gradio_client works better with files
+            logger.info("DEBUG: Removing background via Hugging Face Space...")
+
+            # Save bytes to a temporary file because gradio_client works best with files.
             with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
                 temp_file.write(input_image_bytes)
                 temp_path = temp_file.name
 
-            # Call HF Space with endpoint fallback compatibility
             result = run_hf_background_removal(temp_path)
-            
-            # Read the result (it's a path to a processed image)
-            with open(result, "rb") as f:
-                bg_removed_content = f.read()
+            bg_removed_content = read_hf_result(result)
             bg_removed_ok = True
             logger.info("DEBUG: Background removed successfully via Hugging Face")
-            
+
         except Exception as e:
             err = str(e).lower()
-            logger.warning("HF background removal failed, falling back to original image: %s", e)
-            # Only block hard on explicit quota/rate-limit errors to avoid uncontrolled retries.
+            logger.warning("HF background removal failed: %s", e)
             if "429" in err or "quota" in err or "rate limit" in err:
                 raise ProcessingError("quota_exceeded", "AI quota exceeded. Please try again later.", 429)
-            bg_removed_content = input_image_bytes
+            if "401" in err or "unauthorized" in err or "invalid user token" in err or "expired" in err:
+                raise ProcessingError("hf_auth_failed", "Background removal is not authorized. Please update the Hugging Face token.", 503)
+            raise ProcessingError("hf_background_failed", "Background removal service is unavailable. Please try again.", 503)
         finally:
             if temp_path and os.path.exists(temp_path):
                 try:
@@ -632,14 +762,17 @@ def process():
         return value
 
     # Layout settings
-    passport_width = parse_int("width", 390, 100, 1000)
-    passport_height = parse_int("height", 480, 100, 1200)
-    border = parse_int("border", 2, 0, 25)
-    spacing = parse_int("spacing", 10, 0, 200)
-    margin_x = 10
-    margin_y = 10
-    horizontal_gap = 10
-    a4_w, a4_h = 2480, 3508
+    passport_width = parse_int("width", 390, 100, 4000)
+    passport_height = parse_int("height", 480, 100, 5000)
+    border = parse_int("border", 2, 0, 200)
+    spacing = parse_int("spacing", 10, 0, 800)
+    print_dpi = parse_int("print_dpi", 300, 150, 1200)
+    dpi_scale = print_dpi / 300.0
+    margin_x = max(1, round(10 * dpi_scale))
+    margin_y = max(1, round(10 * dpi_scale))
+    horizontal_gap = max(0, round(10 * dpi_scale))
+    a4_w = round((210 / 25.4) * print_dpi)
+    a4_h = round((297 / 25.4) * print_dpi)
 
     # Collect images and their copy counts
     images_data = []
@@ -729,7 +862,7 @@ def process():
     print(f"DEBUG: Total pages = {len(pages)}")
 
     # Export multi-page PDF with ReportLab for faster and precise page rendering.
-    # Keep 300 DPI mapping by converting pixel dimensions to PDF points.
+    # Keep the selected print DPI mapping by converting pixel dimensions to PDF points.
     try:
         from reportlab.pdfgen import canvas
         from reportlab.lib.utils import ImageReader
@@ -738,8 +871,8 @@ def process():
         return jsonify({"ok": False, "code": "pdf_engine_unavailable", "error": "PDF engine unavailable. Please install reportlab."}), 500
 
     output = BytesIO()
-    page_w_pt = a4_w * 72.0 / 300.0
-    page_h_pt = a4_h * 72.0 / 300.0
+    page_w_pt = a4_w * 72.0 / print_dpi
+    page_h_pt = a4_h * 72.0 / print_dpi
     pdf = canvas.Canvas(output, pagesize=(page_w_pt, page_h_pt), pageCompression=1)
 
     for page_img in pages:
@@ -769,7 +902,9 @@ def process():
     )
     resp.headers["X-Detected-Mode"] = detected_modes[0] if detected_modes else "normal"
     resp.headers["X-BG-Removal"] = "partial" if (bg_removal_states and not all(bg_removal_states)) else "applied"
-    resp.headers["Access-Control-Expose-Headers"] = "X-Detected-Mode, X-BG-Removal"
+    resp.headers["X-BG-Removal-States"] = ",".join("applied" if state else "skipped" for state in bg_removal_states)
+    resp.headers["X-Print-DPI"] = str(print_dpi)
+    resp.headers["Access-Control-Expose-Headers"] = "X-Detected-Mode, X-BG-Removal, X-BG-Removal-States, X-Print-DPI"
     return resp
 
 if __name__ == "__main__":

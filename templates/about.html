@@ -41,77 +41,99 @@
         background: rgba(99, 102, 241, 0.08);
         color: var(--accent);
       }
+      .home-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+      .home-link svg {
+        width: 1rem;
+        height: 1rem;
+        transition: transform 0.22s ease;
+      }
+      .home-link:hover svg,
+      .home-link:focus-visible svg {
+        transform: translateX(-4px);
+      }
     </style>
   </head>
-  <body>
+  <body data-page="about">
     <header class="sticky top-0 z-20 glass">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-3">
           <img src="/assets/icon.png" class="w-9 h-9" alt="SnapID.Pro" />
           <div class="font-extrabold text-xl">SnapID<span class="text-indigo-500">.Pro</span></div>
         </a>
-        <a href="/" class="px-4 py-2 rounded-xl text-sm font-bold chip">Back to App</a>
+        <div class="flex items-center gap-2">
+          <button id="langToggle" class="px-3 py-2 rounded-xl text-xs font-bold chip" title="Switch language" aria-label="Switch language">EN</button>
+          <a href="/" class="home-link px-4 py-2 rounded-xl text-sm font-bold chip">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span data-i18n="backHome">Back Home</span>
+          </a>
+        </div>
       </div>
     </header>
 
     <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-8 sm:space-y-10">
       <section class="hero-grad rounded-3xl p-8 sm:p-12 text-white shadow-2xl">
-        <p class="uppercase text-xs tracking-[0.2em] font-bold text-indigo-100">About SnapID.Pro</p>
-        <h1 class="text-3xl sm:text-5xl font-extrabold mt-3 leading-tight">Built to make passport photos simple, trustworthy, and print-ready.</h1>
-        <p class="mt-5 text-indigo-100 max-w-3xl leading-relaxed">
+        <p class="uppercase text-xs tracking-[0.2em] font-bold text-indigo-100" data-i18n="aboutEyebrow">About SnapID.Pro</p>
+        <h1 class="text-3xl sm:text-5xl font-extrabold mt-3 leading-tight" data-i18n="aboutHeading">Built to make passport photos simple, trustworthy, and print-ready.</h1>
+        <p class="mt-5 text-indigo-100 max-w-3xl leading-relaxed" data-i18n="aboutIntro">
           SnapID.Pro helps students, families, and professionals generate clean passport photo sheets in minutes. Our workflow combines guided cropping, AI-assisted background cleanup, smart enhancement, and A4 PDF output tuned for real-world print shops.
         </p>
       </section>
 
       <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <article class="glass rounded-2xl p-6">
-          <h2 class="font-extrabold text-lg">Reliability First</h2>
-          <p class="text-sm mt-2 text-slate-600 leading-relaxed">The app is engineered with graceful fallbacks so temporary AI-service issues do not block final PDF generation.</p>
+          <h2 class="font-extrabold text-lg" data-i18n="reliabilityTitle">Reliability First</h2>
+          <p class="text-sm mt-2 text-slate-600 leading-relaxed" data-i18n="reliabilityBody">The app is engineered with graceful fallbacks so temporary AI-service issues do not block final PDF generation.</p>
         </article>
         <article class="glass rounded-2xl p-6">
-          <h2 class="font-extrabold text-lg">Privacy Aware</h2>
-          <p class="text-sm mt-2 text-slate-600 leading-relaxed">Security headers, token-gated access, CSRF protection, and session checks are built in to reduce misuse risks.</p>
+          <h2 class="font-extrabold text-lg" data-i18n="privacyTitle">Privacy Aware</h2>
+          <p class="text-sm mt-2 text-slate-600 leading-relaxed" data-i18n="privacyBody">Security headers, token-gated access, CSRF protection, and session checks are built in to reduce misuse risks.</p>
         </article>
         <article class="glass rounded-2xl p-6">
-          <h2 class="font-extrabold text-lg">Print Accuracy</h2>
-          <p class="text-sm mt-2 text-slate-600 leading-relaxed">Output is laid out on A4 at 300 DPI with configurable dimensions, spacing, and border so final sheets are press-ready.</p>
+          <h2 class="font-extrabold text-lg" data-i18n="printTitle">Print Accuracy</h2>
+          <p class="text-sm mt-2 text-slate-600 leading-relaxed" data-i18n="printBody">Output is laid out on A4 at 300 DPI with configurable dimensions, spacing, and border so final sheets are press-ready.</p>
         </article>
       </section>
 
       <section class="glass rounded-3xl p-7 sm:p-10">
-        <h2 class="text-2xl sm:text-3xl font-extrabold">How SnapID.Pro Works</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold" data-i18n="worksTitle">How SnapID.Pro Works</h2>
         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
-            <p class="font-bold">1. Upload & Crop</p>
-            <p class="text-sm text-slate-600 mt-1">Upload one or many photos and crop with passport ratio guidance.</p>
+            <p class="font-bold" data-i18n="step1Title">1. Upload & Crop</p>
+            <p class="text-sm text-slate-600 mt-1" data-i18n="step1Body">Upload one or many photos and crop with passport ratio guidance.</p>
           </div>
           <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
-            <p class="font-bold">2. AI Refinement</p>
-            <p class="text-sm text-slate-600 mt-1">Background removal and enhancement are applied with automatic mode selection.</p>
+            <p class="font-bold" data-i18n="step2Title">2. AI Refinement</p>
+            <p class="text-sm text-slate-600 mt-1" data-i18n="step2Body">Background removal and enhancement are applied with automatic mode selection.</p>
           </div>
           <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
-            <p class="font-bold">3. Quality Checks</p>
-            <p class="text-sm text-slate-600 mt-1">Validation and safe defaults keep dimensions, spacing, and copies within sensible limits.</p>
+            <p class="font-bold" data-i18n="step3Title">3. Quality Checks</p>
+            <p class="text-sm text-slate-600 mt-1" data-i18n="step3Body">Validation and safe defaults keep dimensions, spacing, and copies within sensible limits.</p>
           </div>
           <div class="rounded-2xl p-5 bg-white/70 border border-indigo-100">
-            <p class="font-bold">4. Export PDF</p>
-            <p class="text-sm text-slate-600 mt-1">Get a downloadable multi-page PDF tailored for straightforward photo printing.</p>
+            <p class="font-bold" data-i18n="step4Title">4. Export PDF</p>
+            <p class="text-sm text-slate-600 mt-1" data-i18n="step4Body">Get a downloadable multi-page PDF tailored for straightforward photo printing.</p>
           </div>
         </div>
       </section>
 
       <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <article class="glass rounded-2xl p-6">
-          <h3 class="font-extrabold text-xl">Trust & Transparency</h3>
+          <h3 class="font-extrabold text-xl" data-i18n="trustTitle">Trust & Transparency</h3>
           <ul class="mt-3 text-sm text-slate-600 space-y-2">
-            <li>Clear status feedback for success, partial AI processing, and recoverable failures.</li>
-            <li>Rate limiting to protect availability and prevent abuse.</li>
-            <li>Defensive backend error handling to avoid vague, silent failures.</li>
+            <li data-i18n="trustItem1">Clear status feedback for success, partial AI processing, and recoverable failures.</li>
+            <li data-i18n="trustItem2">Rate limiting to protect availability and prevent abuse.</li>
+            <li data-i18n="trustItem3">Defensive backend error handling to avoid vague, silent failures.</li>
           </ul>
         </article>
         <article class="glass rounded-2xl p-6">
-          <h3 class="font-extrabold text-xl">Need Help?</h3>
-          <p class="text-sm text-slate-600 mt-3">We welcome feedback and bug reports to keep improving accuracy and usability.</p>
+          <h3 class="font-extrabold text-xl" data-i18n="helpTitle">Need Help?</h3>
+          <p class="text-sm text-slate-600 mt-3" data-i18n="helpBody">We welcome feedback and bug reports to keep improving accuracy and usability.</p>
           <div class="mt-4 flex flex-wrap gap-2">
             <a class="chip px-3 py-2 rounded-xl text-xs font-bold" href="mailto:aryanraut53@gmail.com">aryanraut53@gmail.com</a>
             <a class="chip px-3 py-2 rounded-xl text-xs font-bold" href="https://wa.me/9779762122348" target="_blank" rel="noopener noreferrer">+977 9762122348</a>
@@ -119,5 +141,6 @@
         </article>
       </section>
     </main>
+    <script src="/assets/page-i18n.js?v=20260516"></script>
   </body>
 </html>

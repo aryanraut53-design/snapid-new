@@ -1,33 +1,15 @@
-2026-05-13 13:21:09,906 [INFO] __main__: Connecting to HF Space: aryan56789raut/my-rembg
-2026-05-13 13:21:11,177 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/spaces/aryan56789raut/my-rembg "HTTP/1.1 200 OK"
-2026-05-13 13:21:11,487 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/spaces/aryan56789raut/my-rembg/runtime "HTTP/1.1 200 OK"
-2026-05-13 13:21:13,986 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/config "HTTP/1.1 200 OK"
-2026-05-13 13:21:16,709 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/gradio_api/info?serialize=False "HTTP/1.1 200 OK"
-2026-05-13 13:21:17,065 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/telemetry/py_client/initiated "HTTP/1.1 200 OK"
-2026-05-13 13:21:18,422 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-05-16 02:58:31,710 [INFO] __main__: Connecting to HF Space: aryan56789raut/my-rembg
+2026-05-16 02:58:35,034 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/spaces/aryan56789raut/my-rembg "HTTP/1.1 200 OK"
+2026-05-16 02:58:35,367 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/spaces/aryan56789raut/my-rembg/runtime "HTTP/1.1 200 OK"
+2026-05-16 02:58:38,590 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/config "HTTP/1.1 200 OK"
+2026-05-16 02:58:41,904 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/gradio_api/info?serialize=False "HTTP/1.1 200 OK"
+2026-05-16 02:58:42,469 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/telemetry/py_client/initiated "HTTP/1.1 200 OK"
+2026-05-16 02:58:43,894 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.1.244:5000
-2026-05-13 13:21:18,426 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
-2026-05-13 13:21:19,697 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/gradio_api/heartbeat/2c4c31e7-67fd-46c0-ba8f-08216b4760ea "HTTP/1.1 200 OK"
-2026-05-13 13:25:31,407 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:25:31] "GET / HTTP/1.1" 200 -
-2026-05-13 13:27:20,618 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:27:20] "GET / HTTP/1.1" 200 -
-2026-05-13 13:27:20,858 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:27:20] "[36mGET /assets/icon.png HTTP/1.1[0m" 304 -
-2026-05-13 13:27:20,887 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:27:20] "[36mGET /assets/icon.png HTTP/1.1[0m" 304 -
-2026-05-13 13:27:20,920 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:27:20] "[36mGET /assets/icon.png HTTP/1.1[0m" 304 -
-2026-05-13 13:27:29,753 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:27:29] "GET /faq HTTP/1.1" 200 -
-2026-05-13 13:29:18,555 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:29:18] "GET /faq HTTP/1.1" 200 -
-2026-05-13 13:29:18,623 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:29:18] "[36mGET /assets/icon.png HTTP/1.1[0m" 304 -
-2026-05-13 13:29:19,771 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:29:19] "GET / HTTP/1.1" 200 -
-2026-05-13 13:29:19,797 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:29:19] "[36mGET /assets/icon.png HTTP/1.1[0m" 304 -
-2026-05-13 13:29:27,336 [INFO] __main__: DEBUG: Processing 1 image(s) | enhance_mode=auto
-2026-05-13 13:29:27,343 [INFO] __main__: DEBUG: Removing background via Hugging Face API...
-2026-05-13 13:29:29,951 [INFO] httpx: HTTP Request: POST https://aryan56789raut-my-rembg.hf.space/gradio_api/upload "HTTP/1.1 200 OK"
-2026-05-13 13:29:32,458 [INFO] httpx: HTTP Request: POST https://aryan56789raut-my-rembg.hf.space/gradio_api/queue/join "HTTP/1.1 200 OK"
-2026-05-13 13:29:34,922 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/gradio_api/queue/data?session_hash=2c4c31e7-67fd-46c0-ba8f-08216b4760ea "HTTP/1.1 200 OK"
-2026-05-13 13:29:38,040 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/gradio_api/file=/tmp/gradio/023c0ba01fadf29a7234edc0a6870edb62d8b5a4fe7b276d706a12fb8d24bd31/image.webp "HTTP/1.1 200 OK"
-2026-05-13 13:29:38,056 [INFO] __main__: DEBUG: Background removed successfully via Hugging Face
-C:\Users\aryan\OneDrive\Pictures\InstantPhotos-master\app.py:351: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
-  pixels = list(img.getdata())
-2026-05-13 13:29:43,488 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:29:43] "POST /process HTTP/1.1" 200 -
-2026-05-13 13:35:09,096 [INFO] werkzeug: 127.0.0.1 - - [13/May/2026 13:35:09] "GET / HTTP/1.1" 200 -
+ * Running on http://192.168.10.109:5000
+2026-05-16 02:58:43,896 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-05-16 02:58:45,500 [INFO] httpx: HTTP Request: GET https://aryan56789raut-my-rembg.hf.space/gradio_api/heartbeat/779c7053-b79a-44fb-8b0f-ec9533eb4dd0 "HTTP/1.1 200 OK"
+2026-05-16 02:59:01,663 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 02:59:01] "GET /history HTTP/1.1" 200 -
+2026-05-16 02:59:01,714 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 02:59:01] "GET /about HTTP/1.1" 200 -
+2026-05-16 02:59:02,096 [INFO] werkzeug: 127.0.0.1 - - [16/May/2026 02:59:02] "GET /assets/page-i18n.js HTTP/1.1" 200 -
